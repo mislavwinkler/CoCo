@@ -1,0 +1,3 @@
+package com.diplomski.mucnjak.coco.extensions
+
+val String.Companion.empty get() = ""
