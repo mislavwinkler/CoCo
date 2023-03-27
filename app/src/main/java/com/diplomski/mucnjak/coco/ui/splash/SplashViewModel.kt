@@ -17,7 +17,7 @@ class SplashViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getLessons().forEach {
-                Log.d("jakovLogs", "jakovLogs ${it.topic}")
+                Log.d("jakovLogs", "jakovLogs ${it.topicName}")
             }
         }
     }
