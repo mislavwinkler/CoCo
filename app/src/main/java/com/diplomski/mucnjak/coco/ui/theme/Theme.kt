@@ -50,9 +50,9 @@ fun CoCoTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable (
 
 object CustomColorPalette {
     val colorStudent1 = Pink100
-    val colorStudent3 = Yellow100
-    val colorStudent4 = Purple100
-    val colorStudent5 = Green100
+    val colorStudent2 = Yellow100
+    val colorStudent3 = Purple100
+    val colorStudent4 = Green100
 }
 
 val LocalCustomColor = compositionLocalOf { CustomColorPalette }

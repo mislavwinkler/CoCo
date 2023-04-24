@@ -25,6 +25,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.withStyle
+import com.diplomski.mucnjak.coco.extensions.empty
 
 const val QWERTZ_LAYOUT = "QWERTZUIOPASDFGHJKLYXCVBNM"
 
@@ -85,7 +86,10 @@ fun CustomKeyboardManagerScope.CustomKeyboard(onConfirm: () -> Unit = {}) {
 }
 
 @Composable
-fun CustomKeyboardManagerScope.CustomKeyboardTextField() {
+fun CustomKeyboardManagerScope.CustomKeyboardTextField(
+    modifier: Modifier = Modifier,
+    placeholder: String = String.empty
+) {
     val infiniteTransition = rememberInfiniteTransition()
     val cursorBlink by infiniteTransition.animateValue(
         initialValue = 0,
@@ -102,12 +106,13 @@ fun CustomKeyboardManagerScope.CustomKeyboardTextField() {
         inputText
     }
     TextField(
-        modifier = Modifier
+        modifier = modifier
             .focusable(false)
             .clickable { update(isKeyboardShown = true) },
         value = displayText,
         onValueChange = {},
         enabled = false,
+        placeholder = { if (!isKeyboardShown) Text(text = placeholder) },
         visualTransformation = { text ->
             TransformedText(
                 AnnotatedString.Builder().apply {

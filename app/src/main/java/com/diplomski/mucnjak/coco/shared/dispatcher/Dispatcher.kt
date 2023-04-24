@@ -1,4 +1,4 @@
-package com.jakov.trakt.moviestraktapp.shared.dispatcher
+package com.diplomski.mucnjak.coco.shared.dispatcher
 
 import kotlinx.coroutines.CoroutineDispatcher
 
