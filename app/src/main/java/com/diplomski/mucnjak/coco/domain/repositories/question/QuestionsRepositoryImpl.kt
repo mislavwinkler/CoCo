@@ -17,11 +17,11 @@ class QuestionsRepositoryImpl @Inject constructor(
 
     private val availableQuestions: MutableList<Question> = mutableListOf()
 
-    private val studentQuestion: MutableMap<Student, Question> = mutableMapOf()
+    private val studentQuestion: MutableMap<Int, Question> = mutableMapOf()
 
     private val mutex = Mutex()
 
-    override suspend fun getAvailableQuestion(student: Student) = studentQuestion[student]
+    override suspend fun getAvailableQuestion(studentIndex: Int) = studentQuestion[studentIndex]
         ?: mutex.withLock {
             if (availableQuestions.isEmpty()) {
                 availableQuestions.addAll(
@@ -29,15 +29,15 @@ class QuestionsRepositoryImpl @Inject constructor(
                         .let { questionsMappers.mapToUiModel(it) })
             }
 
-            studentQuestion[student] = availableQuestions.first()
+            studentQuestion[studentIndex] = availableQuestions.first()
 
             return@withLock availableQuestions.removeFirst<Question>()
         }
 
-    override suspend fun releaseQuestion(student: Student) {
-        if (studentQuestion.containsKey(student)) {
+    override suspend fun releaseQuestion(studentIndex: Int) {
+        if (studentQuestion.containsKey(studentIndex)) {
             mutex.withLock {
-                studentQuestion.remove(student)?.let { availableQuestions.add(it) }
+                studentQuestion.remove(studentIndex)?.let { availableQuestions.add(it) }
             }
         }
     }

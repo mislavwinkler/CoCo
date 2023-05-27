@@ -6,34 +6,32 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.diplomski.mucnjak.coco.ui.splash.SplashScreen
-import com.diplomski.mucnjak.coco.ui.studentinput.StudentInputScreen
+import com.diplomski.mucnjak.coco.ui.home.HomeScreen
+import com.diplomski.mucnjak.coco.ui.split_screen.SplitScreen
 
 sealed class Screen(val rootRoute: String) {
 
-    object Splash: Screen("root")
-    object StudentInput: Screen(rootRoute = "root/studentInput")
+    object Home: Screen("root")
+    object SplitScreen: Screen(rootRoute = "root/studentInput")
 }
 
 @Composable
 fun NavigationContent() {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = Screen.Splash.rootRoute) {
+    NavHost(navController, startDestination = Screen.Home.rootRoute) {
         addSplashScreen(navController)
-        addStudentInputScreen(navController)
+        addSplitScreen(navController)
     }
 }
 
 private fun NavGraphBuilder.addSplashScreen(navController: NavController) {
-    composable(route = Screen.Splash.rootRoute) {
-        SplashScreen { navController.navigate(Screen.StudentInput.rootRoute) }
+    composable(route = Screen.Home.rootRoute) {
+        HomeScreen { navController.navigate(Screen.SplitScreen.rootRoute) }
     }
 }
 
-private fun NavGraphBuilder.addStudentInputScreen(navController: NavController) {
-    composable(route = Screen.StudentInput.rootRoute) {
-        StudentInputScreen {
-
-        }
+private fun NavGraphBuilder.addSplitScreen(navController: NavController) {
+    composable(route = Screen.SplitScreen.rootRoute) {
+        SplitScreen()
     }
 }

@@ -7,4 +7,6 @@ import javax.inject.Inject
 data class DispatcherImpl @Inject constructor(
     override val io: CoroutineDispatcher,
     override val default: CoroutineDispatcher,
-): Dispatcher
+    override val main: CoroutineDispatcher
+): Dispatcher {
+}

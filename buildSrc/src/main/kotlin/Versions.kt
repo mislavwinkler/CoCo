@@ -1,4 +1,5 @@
 object Versions {
+
     // Android
     const val androidApplication = "7.4.1"
 
@@ -10,6 +11,7 @@ object Versions {
 
     // Androidx
     const val coreKtx = "1.9.0"
+    const val coreSplashScreen = "1.0.1"
 
     // Lifecycle
     const val lifecycleRuntimeKtx = "2.6.1"
@@ -38,9 +40,12 @@ object Versions {
     // Junit
     const val junit = "4.13.2"
 
-    // Firestore
-    const val firestore = "24.4.5"
+    // Firebase
+    const val firebaseBom = "32.0.0"
 
     // Google services
     const val googleServices = "4.3.15"
+
+    // Glide
+    const val glideCompose = "1.0.0-alpha.1"
 }

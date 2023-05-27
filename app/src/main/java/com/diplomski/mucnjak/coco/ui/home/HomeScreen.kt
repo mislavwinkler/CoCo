@@ -1,4 +1,4 @@
-package com.diplomski.mucnjak.coco.ui.splash
+package com.diplomski.mucnjak.coco.ui.home
 
 import SAMSUNG_SM_X200
 import androidx.compose.foundation.background
@@ -17,53 +17,55 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diplomski.mucnjak.coco.shared.DoNothing
 import com.diplomski.mucnjak.coco.ui.common.OnState
+import com.diplomski.mucnjak.coco.ui.old.splash.HomeViewModel
 import com.diplomski.mucnjak.coco.ui.theme.LocalCustomColor
 
 @Composable
-fun SplashScreen(navigateToNameInput: () -> Unit) {
-    Content(navigateToNameInput)
+fun HomeScreen(navigateToSplitScreen: () -> Unit) {
+    Content(navigateToSplitScreen = navigateToSplitScreen)
 }
 
 @Composable
 private fun Content(
-    navigateToNameInput: () -> Unit,
-    viewModel: SplashViewModel = hiltViewModel(),
+    navigateToSplitScreen: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     viewModel.OnState { state ->
         HandleState(
             state = state,
-            initialize = viewModel::initializeActivity,
+            loadActivity = viewModel::loadActivity,
             clearConfiguration = viewModel::clearActivity,
-            start = navigateToNameInput,
+            start = navigateToSplitScreen,
         )
     }
 }
 
 @Composable
 private fun HandleState(
-    state: SplashState,
-    initialize: () -> Unit,
+    state: HomeState,
+    loadActivity: () -> Unit,
     clearConfiguration: () -> Unit,
     start: () -> Unit,
 ) {
     when (state) {
-        SplashState.Initial -> InitialState(initialize)
-        SplashState.Loading -> LoadingState()
-        is SplashState.Loaded -> LoadedState(state, clearConfiguration, start)
+        HomeState.Initial -> DoNothing
+        HomeState.Failed -> FailedState(loadActivity)
+        HomeState.Loading -> LoadingState()
+        is HomeState.Loaded -> LoadedState(state, clearConfiguration, start)
     }
 }
 
 @Composable
-private fun InitialState(
-    initialize: () -> Unit,
+private fun FailedState(
+    loadActivity: () -> Unit,
 ) {
-    SplashContent {
+    HomeContent {
         Button(
             modifier = Modifier
-                .padding(top = 16.dp)
-                .height(56.dp)
+                .padding(top = 10.667.dp)
+                .height(37.333.dp)
                 .fillMaxWidth(0.3f),
-            onClick = { initialize() }
+            onClick = { loadActivity() }
         ) {
             Text(text = "Initialize!")
         }
@@ -72,11 +74,11 @@ private fun InitialState(
 
 @Composable
 private fun LoadingState() {
-    SplashContent {
+    HomeContent {
         Button(
             modifier = Modifier
-                .padding(top = 16.dp)
-                .height(56.dp)
+                .padding(top = 10.667.dp)
+                .height(37.333.dp)
                 .fillMaxWidth(0.3f),
             onClick = { DoNothing },
             enabled = false
@@ -88,19 +90,19 @@ private fun LoadingState() {
 
 @Composable
 private fun LoadedState(
-    state: SplashState.Loaded,
+    state: HomeState.Loaded,
     clearConfiguration: () -> Unit,
     start: () -> Unit,
 ) {
-    SplashContent {
+    HomeContent {
         Row(
             modifier = Modifier
-                .padding(top = 16.dp)
+                .padding(top = 10.667.dp)
                 .fillMaxWidth(0.4f),
         ) {
             Button(
                 modifier = Modifier
-                    .height(56.dp)
+                    .height(37.333.dp)
                     .fillMaxWidth(0.75f),
                 onClick = { clearConfiguration() }
             ) {
@@ -108,8 +110,8 @@ private fun LoadedState(
             }
             Button(
                 modifier = Modifier
-                    .padding(start = 8.dp)
-                    .height(56.dp)
+                    .padding(start = 5.333.dp)
+                    .height(37.333.dp)
                     .fillMaxWidth(),
                 onClick = { start() }
             ) {
@@ -135,12 +137,12 @@ private fun LoadedState(
 }
 
 @Composable
-private fun SplashContent(
+private fun HomeContent(
     content: @Composable () -> Unit,
 ) {
     Box(
         modifier = Modifier
-            .background(color = LocalCustomColor.current.colorStudent1)
+            .background(color = LocalCustomColor.current.neutralBackground)
             .fillMaxSize(),
     ) {
         Column(
@@ -165,8 +167,8 @@ private fun SplashContent(
 @Composable
 private fun PreviewInitial() {
     HandleState(
-        state = SplashState.Initial,
-        initialize = { DoNothing },
+        state = HomeState.Initial,
+        loadActivity = { DoNothing },
         clearConfiguration = { DoNothing },
         start = { DoNothing }
     )
@@ -176,8 +178,8 @@ private fun PreviewInitial() {
 @Composable
 private fun PreviewLoading() {
     HandleState(
-        state = SplashState.Loading,
-        initialize = { DoNothing },
+        state = HomeState.Loading,
+        loadActivity = { DoNothing },
         clearConfiguration = { DoNothing },
         start = { DoNothing }
     )
@@ -187,8 +189,8 @@ private fun PreviewLoading() {
 @Composable
 private fun PreviewLoaded() {
     HandleState(
-        state = SplashState.Loaded(2, "Topic title", "Subtopic title"),
-        initialize = { DoNothing },
+        state = HomeState.Loaded(2, "Topic title", "Subtopic title"),
+        loadActivity = { DoNothing },
         clearConfiguration = { DoNothing },
         start = { DoNothing }
     )

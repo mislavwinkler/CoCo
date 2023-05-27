@@ -5,9 +5,9 @@ import com.diplomski.mucnjak.coco.data.ui.Student
 
 interface QuestionsRepository {
 
-    suspend fun getAvailableQuestion(student: Student): Question
+    suspend fun getAvailableQuestion(studentIndex: Int): Question
 
-    suspend fun releaseQuestion(student: Student)
+    suspend fun releaseQuestion(studentIndex: Int)
 
     fun clearRepository()
 }

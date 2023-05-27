@@ -5,5 +5,7 @@ import com.diplomski.mucnjak.coco.data.domain.ActiveActivityDomainModel
 interface ActiveActivityRepository {
     suspend fun getActiveActivity(): ActiveActivityDomainModel
 
+    fun getLocalActiveActivity(): ActiveActivityDomainModel?
+
     fun clearRepository()
 }

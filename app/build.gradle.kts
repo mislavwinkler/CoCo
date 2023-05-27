@@ -5,6 +5,7 @@ import Dependencies.Androidx.Core.Core
 import Dependencies.Androidx.Lifecycle.Lifecycle
 import Dependencies.Androidx.Test.Test
 import Dependencies.Firebase
+import Dependencies.Glide
 import Dependencies.Junit
 import Dependencies.Kotlinx
 import extensions.*
@@ -69,6 +70,7 @@ dependencies {
         Core {
             implementations(
                 coreKtx,
+                coreSplashScreen,
             )
         }
 
@@ -121,13 +123,21 @@ dependencies {
 
     Firebase {
         implementations(
+            platform(firebaseBom),
             firebaseFirestore,
+            firebaseStorage,
         )
     }
 
     Kotlinx {
         implementations(
-            kotlinxCoroutinesPlayServices
+            kotlinxCoroutinesPlayServices,
+        )
+    }
+
+    Glide {
+        implementations(
+            glideCompose,
         )
     }
 }

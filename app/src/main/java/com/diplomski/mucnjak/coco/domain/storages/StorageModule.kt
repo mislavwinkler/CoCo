@@ -11,4 +11,6 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface StorageModule {
 
+    @Binds
+    fun bindStudentStorage(storage: StudentStorage): Storage<Student>
 }

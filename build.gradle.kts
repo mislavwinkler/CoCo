@@ -1,3 +1,8 @@
+buildscript {
+    dependencies {
+        classpath("com.google.gms:google-services:4.3.15")
+    }
+}
 plugins {
     id(Plugins.androidApplication) version Versions.androidApplication apply false
     id(Plugins.kotlin) version Versions.kotlin apply false

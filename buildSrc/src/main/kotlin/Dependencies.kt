@@ -1,5 +1,3 @@
-import org.gradle.api.artifacts.dsl.DependencyHandler
-
 object Dependencies {
     object Compose : DependencyGrouping<Compose> {
         const val ui = "androidx.compose.ui:ui:${Versions.compose}"
@@ -30,6 +28,7 @@ object Dependencies {
             fun Androidx.Core(grouping: Core.() -> Unit) = grouping(Core)
 
             const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
+            const val coreSplashScreen = "androidx.core:core-splashscreen:${Versions.coreSplashScreen}"
         }
 
         object Lifecycle {
@@ -55,12 +54,17 @@ object Dependencies {
     }
 
     object Firebase : DependencyGrouping<Firebase> {
-
-        const val firebaseFirestore = "com.google.firebase:firebase-firestore-ktx:${Versions.firestore}"
+        const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+        const val firebaseFirestore = "com.google.firebase:firebase-firestore-ktx"
+        const val firebaseStorage = "com.google.firebase:firebase-storage-ktx"
     }
 
     object Kotlinx : DependencyGrouping<Kotlinx> {
         const val kotlinxCoroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.kotlinxCoroutinesPlayServices}"
+    }
+
+    object Glide : DependencyGrouping<Glide> {
+        const val glideCompose = "com.github.bumptech.glide:compose:${Versions.glideCompose}"
     }
 
 }

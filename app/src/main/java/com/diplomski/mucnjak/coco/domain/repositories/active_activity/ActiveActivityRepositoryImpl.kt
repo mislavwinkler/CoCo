@@ -23,6 +23,8 @@ class ActiveActivityRepositoryImpl @Inject constructor(
             return@let activeActivity ?: throw IllegalStateException()
         }
 
+    override fun getLocalActiveActivity() = activeActivity
+
     override fun clearRepository() {
         activeActivity = null
     }

@@ -1,0 +1,67 @@
+package com.diplomski.mucnjak.coco.ui.split_screen.welcome
+
+import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
+import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
+import com.diplomski.mucnjak.coco.domain.use_case.get_activity.GetActivity
+import com.diplomski.mucnjak.coco.domain.use_case.get_available_question.GetAvailableQuestion
+import com.diplomski.mucnjak.coco.domain.use_case.get_student_name.GetStudentName
+import com.diplomski.mucnjak.coco.domain.use_case.rotate_student_screen.RotateStudentScreen
+import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_navigation_state.SubscribeToNavigationState
+import com.diplomski.mucnjak.coco.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+object NavigateToSolving
+
+@HiltViewModel
+class WelcomeViewModel @Inject constructor(
+    private val getStudentName: GetStudentName,
+    private val getAvailableQuestion: GetAvailableQuestion,
+    private val rotateStudentScreen: RotateStudentScreen,
+    private val getActivity: GetActivity,
+    private val confirmNextStep: ConfirmNextStep,
+    private val subscribeToNavigationState: SubscribeToNavigationState,
+) : BaseViewModel<WelcomeState, NavigateToSolving>(WelcomeState.Initial) {
+
+    init {
+        viewModelScope.launch {
+            launch {
+                subscribeToNavigationState().collect { state ->
+                    if (state == State.SOLVING) {
+                        setNavigationEvent(NavigateToSolving)
+                    }
+                }
+            }
+        }
+    }
+
+    fun rotateScreen(studentIndex: Int) {
+        viewModelScope.launch {
+            rotateStudentScreen(studentIndex = studentIndex)
+        }
+    }
+
+    fun onConfirmActivityPreview(studentIndex: Int) {
+        viewModelScope.launch {
+            confirmNextStep(studentIndex)
+        }
+    }
+
+    fun init(studentIndex: Int) {
+        viewModelScope.launch {
+            val activity = getActivity()
+            val question = getAvailableQuestion(studentIndex = studentIndex)
+
+            updateState {
+                WelcomeState.ActivityPreview(
+                    studentName = getStudentName(studentIndex),
+                    topic = activity.topic,
+                    subtopic = activity.subTopic,
+                    description = "In next ${10} minutes: \n ${question.questionText}"
+                )
+            }
+        }
+    }
+}

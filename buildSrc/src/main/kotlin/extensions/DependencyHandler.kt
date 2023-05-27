@@ -1,8 +1,7 @@
 package extensions
 
+import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.kotlin.dsl.PluginDependenciesSpecScope
-import org.gradle.plugin.use.PluginDependenciesSpec
 
 fun DependencyHandler.kapts(vararg kapts: String) {
     kapts.forEach { dependency ->
@@ -10,7 +9,7 @@ fun DependencyHandler.kapts(vararg kapts: String) {
     }
 }
 
-fun DependencyHandler.implementations(vararg implementations: String) {
+fun DependencyHandler.implementations(vararg implementations: Any) {
     implementations.forEach { dependency ->
         add("implementation", dependency)
     }
