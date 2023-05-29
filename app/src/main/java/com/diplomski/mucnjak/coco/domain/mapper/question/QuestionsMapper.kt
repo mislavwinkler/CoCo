@@ -1,6 +1,7 @@
 package com.diplomski.mucnjak.coco.domain.mapper.question
 
 import com.diplomski.mucnjak.coco.data.domain.ActiveActivityDomainModel
+import com.diplomski.mucnjak.coco.data.domain.AnswersDomainModel
 import com.diplomski.mucnjak.coco.data.ui.Question
 import com.diplomski.mucnjak.coco.domain.mapper.answer.AnswerMappers
 import javax.inject.Inject
@@ -19,7 +20,12 @@ class QuestionsMapper @Inject constructor(
             .map {
                 Question(
                     questionText = it.key,
-                    answers = answersMapper.mapToUiModel(domainModel)
+                    answers = answersMapper.mapToUiModel(
+                        AnswersDomainModel(
+                            answers = it.value,
+                            answerType = domainModel.answerType
+                        )
+                    )
                 )
             }
 }

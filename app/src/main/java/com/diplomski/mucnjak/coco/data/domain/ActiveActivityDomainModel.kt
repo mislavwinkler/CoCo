@@ -5,7 +5,6 @@ import com.diplomski.mucnjak.coco.data.ui.AnswerType
 data class ActiveActivityDomainModel(
     val id: Id,
     val answers: Map<String, Int>,
-    val answerImages: Map<String, String> = emptyMap(),
     val answerType: AnswerType,
     val configToTablet: List<String?>,
     val numOfStudents: List<Int>,

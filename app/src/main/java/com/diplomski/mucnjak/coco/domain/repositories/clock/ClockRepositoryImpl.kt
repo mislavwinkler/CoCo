@@ -18,13 +18,15 @@ class ClockRepositoryImpl @Inject constructor(
     override val timerFlow: Flow<Int>
         get() = currentTimerFLow
 
+    private var job: Job? = null
+
     @OptIn(DelicateCoroutinesApi::class)
     override suspend fun startClock(
         time: Int,
         onTimeout: suspend () -> Unit
     ): SharedFlow<Int> = withContext(dispatcher.io) {
         timer = time
-        flow<Unit> {
+        job = flow<Unit> {
             // Delay one second for smoother flow
             delay(1000)
             while (this@ClockRepositoryImpl.timer >= 0) {
@@ -36,5 +38,10 @@ class ClockRepositoryImpl @Inject constructor(
         }.launchIn(GlobalScope)
 
         return@withContext currentTimerFLow
+    }
+
+    override fun cancelTimer() {
+        job?.cancel()
+        job = null
     }
 }

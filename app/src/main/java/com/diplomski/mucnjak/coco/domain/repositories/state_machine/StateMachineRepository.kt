@@ -7,4 +7,5 @@ interface StateMachineRepository {
     suspend fun reset()
     suspend fun confirmNextStep(studentIndex: Int)
     suspend fun getNextDisplayTime(): Int
+    suspend fun revokeNextStepConfirmation(studentIndex: Int)
 }

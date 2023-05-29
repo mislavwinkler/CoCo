@@ -4,9 +4,14 @@ import androidx.lifecycle.viewModelScope
 import com.diplomski.mucnjak.coco.data.ui.Answer
 import com.diplomski.mucnjak.coco.data.ui.Question
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
+import com.diplomski.mucnjak.coco.domain.use_case.add_answer.AddAnswer
+import com.diplomski.mucnjak.coco.domain.use_case.remove_answer.RemoveAnswer
+import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
 import com.diplomski.mucnjak.coco.domain.use_case.get_all_answers.GetAllAnswers
 import com.diplomski.mucnjak.coco.domain.use_case.get_available_question.GetAvailableQuestion
+import com.diplomski.mucnjak.coco.domain.use_case.get_student_answers.GetStudentAnswers
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_name.GetStudentName
+import com.diplomski.mucnjak.coco.domain.use_case.revoke_next_step_confirmation.RevokeNextStepConfirmation
 import com.diplomski.mucnjak.coco.domain.use_case.rotate_student_screen.RotateStudentScreen
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_navigation_state.SubscribeToNavigationState
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_timer_ticks.SubscribeToTimerTicks
@@ -16,10 +21,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class AfterSolvingNavigationEvent {
-    object NavigateToIncorrectSolution : AfterSolvingNavigationEvent()
-}
-
 @HiltViewModel
 class SolvingViewModel @Inject constructor(
     private val getStudentName: GetStudentName,
@@ -28,7 +29,12 @@ class SolvingViewModel @Inject constructor(
     private val rotateStudentScreen: RotateStudentScreen,
     private val subscribeToTimerTicks: SubscribeToTimerTicks,
     private val subscribeToNavigationState: SubscribeToNavigationState,
-) : BaseViewModel<SolvingState, AfterSolvingNavigationEvent>(SolvingState.Initial) {
+    private val addAnswer: AddAnswer,
+    private val removeAnswer: RemoveAnswer,
+    private val getStudentAnswers: GetStudentAnswers,
+    private val confirmNextStep: ConfirmNextStep,
+    private val revokeNextStepConfirmation: RevokeNextStepConfirmation,
+) : BaseViewModel<SolvingState, SolvingNavigationEvent>(SolvingState.Initial) {
 
     private var question: Question? = null
     private val answers: MutableList<Answer> = mutableListOf()
@@ -39,7 +45,10 @@ class SolvingViewModel @Inject constructor(
         viewModelScope.launch {
             val studentName = getStudentName(index)
             question = getAvailableQuestion(index)
-            answers.addAll(getAllAnswers())
+            selectedAnswers.clear()
+            selectedAnswers.addAll(getStudentAnswers(index))
+            answers.clear()
+            answers.addAll(getAllAnswers() - selectedAnswers.toSet())
 
             updateState {
                 SolvingState.Solving(
@@ -47,7 +56,7 @@ class SolvingViewModel @Inject constructor(
                     question = question?.questionText ?: throw IllegalStateException(),
                     answers = answers,
                     selectedAnswers = selectedAnswers,
-                    time = "10:00",
+                    time = time.toString(),
                 )
             }
 
@@ -63,10 +72,10 @@ class SolvingViewModel @Inject constructor(
 
             launch {
                 subscribeToNavigationState().collect {
-                    if (it == State.INCORRECT_SOLUTION_NOTE) {
-                        setNavigationEvent(AfterSolvingNavigationEvent.NavigateToIncorrectSolution)
-                    } else if (it == State.FINISH_NOTE) {
-                        DoNothing
+                    when (it) {
+                        State.INCORRECT_SOLUTION_NOTE -> setNavigationEvent(SolvingNavigationEvent.NavigateToIncorrectSolution)
+                        State.FINISH_NOTE -> setNavigationEvent(SolvingNavigationEvent.NavigateToFinishNote)
+                        else -> DoNothing
                     }
                 }
             }
@@ -79,13 +88,21 @@ class SolvingViewModel @Inject constructor(
         }
     }
 
-    fun selectAnswer(answer: Answer) {
+    fun selectAnswer(studentIndex: Int, answer: Answer) {
         if (answers.any { it.value == answer.value }) {
             answers.remove(answer)
             selectedAnswers.add(answer)
+            addAnswer(
+                studentIndex = studentIndex,
+                answer = answer
+            )
         } else {
             answers.add(answer)
             selectedAnswers.remove(answer)
+            removeAnswer(
+                studentIndex = studentIndex,
+                answer = answer
+            )
         }
         updateAnswersSolvingState()
     }
@@ -100,7 +117,10 @@ class SolvingViewModel @Inject constructor(
         }
     }
 
-    fun confirmTaskSolved() {
+    fun confirmTaskSolved(studentIndex: Int) {
+        viewModelScope.launch {
+            confirmNextStep(studentIndex)
+        }
         updateState { state ->
             (state as? SolvingState.Solving)?.let {
                 SolvingState.Congratulations(
@@ -111,7 +131,10 @@ class SolvingViewModel @Inject constructor(
         }
     }
 
-    fun returnToSolving() {
+    fun returnToSolving(studentIndex: Int) {
+        viewModelScope.launch {
+            revokeNextStepConfirmation(studentIndex)
+        }
         updateState { state ->
             (state as? SolvingState.Congratulations)?.let {
                 SolvingState.Solving(

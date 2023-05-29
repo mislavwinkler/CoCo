@@ -13,7 +13,5 @@ sealed class SolvingState {
         val time: String,
     ) : SolvingState()
 
-    data class Congratulations(val studentName: String,val time: String,) : SolvingState()
-
-    object Finished : SolvingState()
+    data class Congratulations(val studentName: String, val time: String) : SolvingState()
 }

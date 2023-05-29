@@ -2,7 +2,6 @@ package com.diplomski.mucnjak.coco.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -18,7 +17,7 @@ abstract class BaseViewModel<State, NavigationEvent>(initialState: State) : View
 
     protected fun updateState(update: (previousState: State) -> State) = uiState.update(update)
 
-    protected fun setState(update: (previouseState: State) -> State) {
+    protected fun setState(update: (previousState: State) -> State) {
         val state = uiState.value
         viewModelScope.launch {
             uiState.emit(update(state))

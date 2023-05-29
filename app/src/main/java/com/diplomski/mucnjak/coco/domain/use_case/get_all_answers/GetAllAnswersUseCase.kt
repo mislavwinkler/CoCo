@@ -1,5 +1,6 @@
 package com.diplomski.mucnjak.coco.domain.use_case.get_all_answers
 
+import com.diplomski.mucnjak.coco.data.domain.AnswersDomainModel
 import com.diplomski.mucnjak.coco.domain.mapper.answer.AnswerMappers
 import com.diplomski.mucnjak.coco.domain.repositories.active_activity.ActiveActivityRepository
 import javax.inject.Inject
@@ -10,5 +11,12 @@ class GetAllAnswersUseCase @Inject constructor(
 ) : GetAllAnswers {
 
     override suspend fun invoke() =
-        activeActivityRepository.getActiveActivity().let { answersMapper.mapToUiModel(it) }
+        activeActivityRepository.getActiveActivity().let { activeActivityDomainModel ->
+            answersMapper.mapToUiModel(
+                AnswersDomainModel(
+                    answers = activeActivityDomainModel.answers.keys.toList(),
+                    answerType = activeActivityDomainModel.answerType
+                )
+            )
+        }
 }

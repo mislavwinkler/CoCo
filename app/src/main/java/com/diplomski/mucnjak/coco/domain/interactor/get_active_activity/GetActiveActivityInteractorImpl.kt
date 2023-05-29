@@ -59,15 +59,15 @@ class GetActiveActivityInteractorImpl @Inject constructor(
         }.first()
 
         if (activeActivity.answerType == AnswerType.IMAGE) {
-            val mapOfAnswerUrls = mutableMapOf<String, String>()
+            val mapOfAnswerUrls = mutableMapOf<String, Int>()
             coroutineScope {
                 activeActivity.answers.forEach {
                     launch {
-                        mapOfAnswerUrls[it.key] = firebaseStorage.getReferenceFromUrl(it.key).downloadUrl.await().toString()
+                        mapOfAnswerUrls[firebaseStorage.getReferenceFromUrl(it.key).downloadUrl.await().toString()] = it.value
                     }
                 }
             }
-            return@withContext activeActivity.copy(answerImages = mapOfAnswerUrls)
+            return@withContext activeActivity.copy(answers = mapOfAnswerUrls)
         }
 
         return@withContext activeActivity

@@ -1,7 +1,6 @@
 package com.diplomski.mucnjak.coco.domain.repositories.question
 
 import com.diplomski.mucnjak.coco.data.ui.Question
-import com.diplomski.mucnjak.coco.data.ui.Student
 import com.diplomski.mucnjak.coco.domain.mapper.question.QuestionsMappers
 import com.diplomski.mucnjak.coco.domain.repositories.active_activity.ActiveActivityRepository
 import kotlinx.coroutines.sync.Mutex
@@ -46,4 +45,6 @@ class QuestionsRepositoryImpl @Inject constructor(
         availableQuestions.clear()
         studentQuestion.clear()
     }
+
+    override fun getAllActiveQuestions() = studentQuestion.values.toList()
 }

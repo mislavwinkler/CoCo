@@ -1,4 +1,4 @@
-package com.diplomski.mucnjak.coco.ui.old.splash
+package com.diplomski.mucnjak.coco.ui.home
 
 import androidx.lifecycle.viewModelScope
 import com.diplomski.mucnjak.coco.data.remote.exceptions.NoDocumentException
@@ -7,7 +7,6 @@ import com.diplomski.mucnjak.coco.domain.use_case.is_activity_loaded.IsActivityL
 import com.diplomski.mucnjak.coco.domain.use_case.release_activity.ReleaseActivity
 import com.diplomski.mucnjak.coco.shared.NoNavigationEvent
 import com.diplomski.mucnjak.coco.ui.base.BaseViewModel
-import com.diplomski.mucnjak.coco.ui.home.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

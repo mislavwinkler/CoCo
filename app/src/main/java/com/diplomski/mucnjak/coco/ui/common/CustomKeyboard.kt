@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.withStyle
 import com.diplomski.mucnjak.coco.extensions.empty
 
+@Suppress("SpellCheckingInspection")
 const val QWERTZ_LAYOUT = "QWERTZUIOPASDFGHJKLYXCVBNM"
 
 @Composable

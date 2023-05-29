@@ -1,6 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.home
 
-import SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diplomski.mucnjak.coco.shared.DoNothing
 import com.diplomski.mucnjak.coco.ui.common.OnState
-import com.diplomski.mucnjak.coco.ui.old.splash.HomeViewModel
 import com.diplomski.mucnjak.coco.ui.theme.LocalCustomColor
 
 @Composable

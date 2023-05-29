@@ -4,5 +4,5 @@ import com.diplomski.mucnjak.coco.data.ui.Student
 
 interface StoreStudent {
 
-    operator fun invoke(student: Student, studentIndex: Int)
+    suspend operator fun invoke(student: Student, studentIndex: Int)
 }

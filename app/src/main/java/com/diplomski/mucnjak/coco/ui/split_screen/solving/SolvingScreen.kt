@@ -1,10 +1,9 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.solving
 
-import SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,8 +20,8 @@ import com.diplomski.mucnjak.coco.data.ui.AnswerType
 import com.diplomski.mucnjak.coco.shared.DoNothing
 import com.diplomski.mucnjak.coco.ui.common.*
 import com.diplomski.mucnjak.coco.ui.common.answer_container.AnswerContainer
+import com.diplomski.mucnjak.coco.ui.common.splitscreen.LocalSize
 import com.diplomski.mucnjak.coco.ui.split_screen.LocalStudentIndex
-import com.diplomski.mucnjak.coco.ui.split_screen.incorrect_solution.IncorrectSolutionState
 import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
 import com.diplomski.mucnjak.coco.ui.theme.LocalCustomColor
 import kotlin.random.Random
@@ -30,14 +29,18 @@ import kotlin.random.Random
 @Composable
 fun SolvingScreen(
     navigateToIncorrectSolution: () -> Unit,
-    navigateToResults: () -> Unit
+    navigateToFinishNote: () -> Unit,
 ) {
-    Content(navigateToIncorrectSolution)
+    Content(
+        navigateToIncorrectSolution = navigateToIncorrectSolution,
+        navigateToFinishNote = navigateToFinishNote
+    )
 }
 
 @Composable
 fun Content(
     navigateToIncorrectSolution: () -> Unit,
+    navigateToFinishNote: () -> Unit,
     viewModel: SolvingViewModel = hiltViewModel()
 ) {
     val index = LocalStudentIndex.current
@@ -52,23 +55,34 @@ fun Content(
                 question = state.question,
                 answers = state.answers,
                 selectedAnswers = state.selectedAnswers,
-                onAnswerSelected = { viewModel.selectAnswer(it) },
-                onAnswerDeselected = { viewModel.selectAnswer(it) },
-                rotateScreen = { viewModel.rotateScreen(index) },
-                confirmTaskSolved = viewModel::confirmTaskSolved
+                onAnswerSelected = { answer ->
+                    viewModel.selectAnswer(
+                        studentIndex = index,
+                        answer = answer
+                    )
+                },
+                onAnswerDeselected = { answer ->
+                    viewModel.selectAnswer(
+                        studentIndex = index,
+                        answer = answer
+                    )
+                },
+                rotateScreen = { viewModel.rotateScreen(index = index) },
+                confirmTaskSolved = { viewModel.confirmTaskSolved(studentIndex = index) }
             )
             is SolvingState.Congratulations -> Congratulations(
                 studentName = state.studentName,
                 time = state.time,
-                rotateScreen = { viewModel.rotateScreen(index) },
-                returnToSolving = viewModel::returnToSolving
+                rotateScreen = { viewModel.rotateScreen(index = index) },
+                returnToSolving = { viewModel.returnToSolving(studentIndex = index) }
             )
             else -> DoNothing
         }
     }
     viewModel.OnNavigationEvent { navigationEvent ->
         when (navigationEvent) {
-            AfterSolvingNavigationEvent.NavigateToIncorrectSolution -> navigateToIncorrectSolution()
+            SolvingNavigationEvent.NavigateToIncorrectSolution -> navigateToIncorrectSolution()
+            SolvingNavigationEvent.NavigateToFinishNote -> navigateToFinishNote()
         }
     }
 }

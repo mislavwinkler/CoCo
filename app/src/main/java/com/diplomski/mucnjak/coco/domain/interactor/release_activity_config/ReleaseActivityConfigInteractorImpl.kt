@@ -26,7 +26,7 @@ class ReleaseActivityConfigInteractorImpl @Inject constructor(
             .await()
             .toObject(ActiveActivityResponse::class.java) ?: throw NoDocumentException("Can't release activity config from ${FirestorePaths.ACTIVE_ACTIVITY_COLLECTION} because document can't be found")
 
-        val updatedConfig = activity.configToTablet.toMutableList<String?>()
+        val updatedConfig = activity.configToTablet.toMutableList()
         updatedConfig[updatedConfig.indexOf(uuidRepository.getUuid().toString())] = null
 
         firestore.collection(FirestorePaths.ACTIVE_ACTIVITY_COLLECTION)

@@ -2,16 +2,13 @@ package com.diplomski.mucnjak.coco.ui.split_screen
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.get_num_of_students.GetNumOfStudents
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_rotation.SubscribeToStudentRotation
 import com.diplomski.mucnjak.coco.domain.use_case.reset_state_machine.ResetStateMachine
-import com.diplomski.mucnjak.coco.shared.NoNavigationEvent
+import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_navigation_state.SubscribeToNavigationState
 import com.diplomski.mucnjak.coco.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,12 +16,21 @@ import javax.inject.Inject
 class SplitViewModel @Inject constructor(
     val getNumOfStudents: GetNumOfStudents,
     val subscribeToStudentRotation: SubscribeToStudentRotation,
+    val subscribeToNavigationState: SubscribeToNavigationState,
     resetStateMachine: ResetStateMachine,
-) : BaseViewModel<SplitState, NoNavigationEvent>(SplitState.Initial(0, emptyList())) {
+) : BaseViewModel<SplitState, SplitNavigationEvent>(SplitState.Initial(0, emptyList())) {
 
     init {
         viewModelScope.launch {
             resetStateMachine()
+
+            launch {
+                subscribeToNavigationState().collect {
+                    if (it == State.SOLUTIONS) {
+                        setNavigationEvent(SplitNavigationEvent.NavigateToSolutions)
+                    }
+                }
+            }
 
             val numOfStudents = getNumOfStudents()
 

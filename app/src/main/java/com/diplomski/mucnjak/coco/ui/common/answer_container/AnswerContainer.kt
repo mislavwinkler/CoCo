@@ -1,13 +1,12 @@
 package com.diplomski.mucnjak.coco.ui.common.answer_container
 
-import SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,9 +16,6 @@ import com.diplomski.mucnjak.coco.R
 import com.diplomski.mucnjak.coco.data.ui.Answer
 import com.diplomski.mucnjak.coco.data.ui.AnswerType
 import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.coroutineScope
 import kotlin.random.Random
 
 @OptIn(ExperimentalLayoutApi::class)

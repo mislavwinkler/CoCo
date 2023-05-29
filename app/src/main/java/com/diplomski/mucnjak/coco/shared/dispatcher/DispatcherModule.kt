@@ -1,6 +1,5 @@
-package com.jakov.trakt.moviestraktapp.shared.dispatcher
+package com.diplomski.mucnjak.coco.shared.dispatcher
 
-import com.diplomski.mucnjak.coco.shared.dispatcher.Dispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

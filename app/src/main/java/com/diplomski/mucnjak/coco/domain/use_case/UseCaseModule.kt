@@ -1,17 +1,27 @@
 package com.diplomski.mucnjak.coco.domain.use_case
 
+import com.diplomski.mucnjak.coco.domain.use_case.add_answer.AddAnswer
+import com.diplomski.mucnjak.coco.domain.use_case.add_answer.AddAnswerUseCase
+import com.diplomski.mucnjak.coco.domain.use_case.remove_answer.RemoveAnswer
+import com.diplomski.mucnjak.coco.domain.use_case.remove_answer.RemoveAnswerUseCase
+import com.diplomski.mucnjak.coco.domain.use_case.add_incorrect_answer_info.AddIncorrectAnswerInfo
+import com.diplomski.mucnjak.coco.domain.use_case.add_incorrect_answer_info.AddIncorrectAnswerInfoUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStepUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.get_activity.GetActivity
 import com.diplomski.mucnjak.coco.domain.use_case.get_activity.GetActivityUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.get_all_answers.GetAllAnswers
 import com.diplomski.mucnjak.coco.domain.use_case.get_all_answers.GetAllAnswersUseCase
+import com.diplomski.mucnjak.coco.domain.use_case.get_all_questions.GetAllQuestions
+import com.diplomski.mucnjak.coco.domain.use_case.get_all_questions.GetAllQuestionsUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.get_available_question.GetAvailableQuestion
 import com.diplomski.mucnjak.coco.domain.use_case.get_available_question.GetAvailableQuestionUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.get_next_time.GetNextTime
 import com.diplomski.mucnjak.coco.domain.use_case.get_next_time.GetNextTimeUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.get_num_of_students.GetNumOfStudents
 import com.diplomski.mucnjak.coco.domain.use_case.get_num_of_students.GetNumOfStudentsUseCase
+import com.diplomski.mucnjak.coco.domain.use_case.get_student_answers.GetStudentAnswers
+import com.diplomski.mucnjak.coco.domain.use_case.get_student_answers.GetStudentAnswersUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_name.GetStudentName
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_name.GetStudentNameUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_rotation.SubscribeToStudentRotation
@@ -22,6 +32,8 @@ import com.diplomski.mucnjak.coco.domain.use_case.release_activity.ReleaseActivi
 import com.diplomski.mucnjak.coco.domain.use_case.release_activity.ReleaseActivityUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.reset_state_machine.ResetStateMachine
 import com.diplomski.mucnjak.coco.domain.use_case.reset_state_machine.ResetStateMachineUseCase
+import com.diplomski.mucnjak.coco.domain.use_case.revoke_next_step_confirmation.RevokeNextStepConfirmation
+import com.diplomski.mucnjak.coco.domain.use_case.revoke_next_step_confirmation.RevokeNextStepConfirmationUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.rotate_student_screen.RotateStudentScreen
 import com.diplomski.mucnjak.coco.domain.use_case.rotate_student_screen.RotateStudentScreenUseCase
 import com.diplomski.mucnjak.coco.domain.use_case.store_student.StoreStudent
@@ -83,4 +95,22 @@ interface UseCaseModule {
 
     @Binds
     fun bindGetNextTime(useCase: GetNextTimeUseCase): GetNextTime
+
+    @Binds
+    fun bindAddAnswer(useCase: AddAnswerUseCase): AddAnswer
+
+    @Binds
+    fun bindRemoveAnswer(useCase: RemoveAnswerUseCase): RemoveAnswer
+
+    @Binds
+    fun bindAddIncorrectAnswerInfo(useCase: AddIncorrectAnswerInfoUseCase): AddIncorrectAnswerInfo
+
+    @Binds
+    fun bindGetStudentAnswers(useCase: GetStudentAnswersUseCase): GetStudentAnswers
+
+    @Binds
+    fun bindRevokeNextStepConfirmation(useCase: RevokeNextStepConfirmationUseCase): RevokeNextStepConfirmation
+
+    @Binds
+    fun bindGetAllQuestions(useCase: GetAllQuestionsUseCase): GetAllQuestions
 }

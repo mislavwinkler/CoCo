@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class ConsumeActiveActivityConfigInteractorImpl @Inject constructor(
     private val dispatcher: Dispatcher,
-    private val firestore: FirebaseFirestore,
+    private val firebaseFirestore: FirebaseFirestore,
     private val uuidRepository: UuidRepository,
 ) : ConsumeActiveActivityConfigInteractor {
 
@@ -24,7 +24,7 @@ class ConsumeActiveActivityConfigInteractorImpl @Inject constructor(
         if (!activeActivityDomainModel.configToTablet.contains(uuid.toString())) {
             config[config.indexOfFirst { it.isNullOrBlank() }] = uuid.toString()
 
-            firestore.collection(FirestorePaths.ACTIVE_ACTIVITY_COLLECTION)
+            firebaseFirestore.collection(FirestorePaths.ACTIVE_ACTIVITY_COLLECTION)
                 .document(activeActivityDomainModel.id)
                 .update(ActiveActivityDomainModel::configToTablet.name, config)
                 .await()

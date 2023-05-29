@@ -24,7 +24,7 @@ class IncorrectSolutionViewModel @Inject constructor(
             launch {
                 subscribeToNavigationState().collect {
                     if (it == State.DISCUSSION) {
-                        setNavigationEvent(IncorrectSolutionNavigationEvent.NavigateToDiscussion)
+                        setNavigationEvent(event = IncorrectSolutionNavigationEvent.NavigateToDiscussion)
                     }
                 }
             }
@@ -39,13 +39,13 @@ class IncorrectSolutionViewModel @Inject constructor(
 
     fun rotateScreen(studentIndex: Int) {
         viewModelScope.launch {
-            rotateStudentScreen(studentIndex)
+            rotateStudentScreen(studentIndex = studentIndex)
         }
     }
 
     fun confirmStudentNextStep(studentIndex: Int) {
         viewModelScope.launch {
-            confirmNextStep(studentIndex)
+            confirmNextStep(studentIndex = studentIndex)
         }
     }
 

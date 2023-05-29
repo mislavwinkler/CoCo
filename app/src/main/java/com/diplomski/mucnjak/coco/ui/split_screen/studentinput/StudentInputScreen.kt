@@ -1,6 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.studentinput
 
-import SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text

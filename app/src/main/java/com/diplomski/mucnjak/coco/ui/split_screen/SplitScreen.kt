@@ -1,32 +1,30 @@
 package com.diplomski.mucnjak.coco.ui.split_screen
 
-import SAMSUNG_SM_X200
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diplomski.mucnjak.coco.shared.DoNothing
 import com.diplomski.mucnjak.coco.ui.common.*
+import com.diplomski.mucnjak.coco.ui.common.splitscreen.SplitScreenContainer
 import com.diplomski.mucnjak.coco.ui.theme.StudentCoCoTheme
 
 @Composable
-fun SplitScreen() {
-    Content()
+fun SplitScreen(navigateToSolutions: () -> Unit) {
+    Content(navigateToSolutions)
 }
 
 @Composable
 private fun Content(
+    navigateToSolutions: () -> Unit,
     viewModel: SplitViewModel = hiltViewModel()
 ) {
     viewModel.OnState { state ->
@@ -36,6 +34,12 @@ private fun Content(
                 rotations = state.rotations
             )
             else -> DoNothing
+        }
+    }
+
+    viewModel.OnNavigationEvent {
+        if (it == SplitNavigationEvent.NavigateToSolutions) {
+            navigateToSolutions()
         }
     }
 }
@@ -66,5 +70,5 @@ private fun SplitScreens(
 @Preview(showSystemUi = true, device = SAMSUNG_SM_X200)
 @Composable
 private fun Preview() {
-    Content()
+    Content({ DoNothing })
 }

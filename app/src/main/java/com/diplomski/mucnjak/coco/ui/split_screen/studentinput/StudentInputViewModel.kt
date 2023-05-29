@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.diplomski.mucnjak.coco.data.ui.Student
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
-import com.diplomski.mucnjak.coco.domain.use_case.reset_state_machine.ResetStateMachine
 import com.diplomski.mucnjak.coco.domain.use_case.store_student.StoreStudent
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_navigation_state.SubscribeToNavigationState
 import com.diplomski.mucnjak.coco.ui.base.BaseViewModel
@@ -35,8 +34,8 @@ class StudentInputViewModel @Inject constructor(
 
     fun confirmStudent(name: String, index: Int, rotation: Int = 0) {
         student = Student(name, index, rotation)
-        storeStudent.invoke(student, index)
         viewModelScope.launch {
+            storeStudent(student, index)
             confirmNextStep(index)
         }
     }

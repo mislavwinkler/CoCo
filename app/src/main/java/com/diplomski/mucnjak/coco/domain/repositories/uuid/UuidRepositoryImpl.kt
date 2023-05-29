@@ -1,7 +1,6 @@
 package com.diplomski.mucnjak.coco.domain.repositories.uuid
 
 import android.content.SharedPreferences
-import com.diplomski.mucnjak.coco.extensions.empty
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton

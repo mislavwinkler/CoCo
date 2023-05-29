@@ -23,7 +23,7 @@ class ActiveActivityDomainMapper @Inject constructor() :
             discussionTimes = activeActivityResponse.discussionTimes,
             numOfStudents = activeActivityResponse.numOfStudents,
             questions = activeActivityResponse.questions,
-            solvingTime = 1,//activeActivityResponse.solvingTime,
+            solvingTime = activeActivityResponse.solvingTime,
             subTopic = activeActivityResponse.subTopic,
             topic = activeActivityResponse.topic,
         )

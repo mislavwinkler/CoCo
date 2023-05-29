@@ -8,6 +8,6 @@ class StoreStudentUseCase @Inject constructor(
     private val studentRepository: StudentRepository
 ) : StoreStudent {
 
-    override fun invoke(student: Student, studentIndex: Int) =
+    override suspend fun invoke(student: Student, studentIndex: Int) =
         studentRepository.storeStudent(student, studentIndex)
 }

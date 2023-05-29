@@ -1,10 +1,13 @@
+@file:Suppress("SpellCheckingInspection", "SpellCheckingInspection")
+
 package com.diplomski.mucnjak.coco.data.remote.response
 
 import com.diplomski.mucnjak.coco.extensions.empty
 
 data class ActiveActivityResponse(
     val answers: Map<String, Int> = emptyMap(),
-    val anwserTypeImage: Boolean = false,
+    // Typo in DB
+    @Suppress("SpellCheckingInspection") val anwserTypeImage: Boolean = false,
     val configToTablet: List<String?> = emptyList(),
     val correctionTimes: List<Int> = emptyList(),
     val discussionTimes: List<Int> = emptyList(),

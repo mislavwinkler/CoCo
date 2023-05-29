@@ -1,10 +1,9 @@
-package com.diplomski.mucnjak.coco.ui.common
+package com.diplomski.mucnjak.coco.ui.common.splitscreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.diplomski.mucnjak.coco.extensions.pxToDp
@@ -50,6 +49,7 @@ fun SplitScreenContainer(
         when (numOfScreens) {
             1 -> Row { screen(0) }
             2 -> PairContainer(screens = screens)
+            3 -> GridContainer(screens = screens)
             else -> GridContainer(screens = screens)
         }
     }
