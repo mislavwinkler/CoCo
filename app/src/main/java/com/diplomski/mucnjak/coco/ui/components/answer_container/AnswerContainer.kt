@@ -87,6 +87,7 @@ fun TextAnswer(
 fun ImageAnswer(imageUrl: String, onClick: () -> Unit, isSelected: Boolean) {
     Card(
         modifier = Modifier
+            .sizeIn(minWidth = Dimens.minImageAnswerSize)
             .fillMaxWidth(0.3f)
             .aspectRatio(1f)
             .padding(start = Dimens.answerPadding, top = Dimens.answerPadding),

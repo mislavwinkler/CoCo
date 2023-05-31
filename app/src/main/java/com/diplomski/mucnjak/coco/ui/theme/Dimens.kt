@@ -28,4 +28,6 @@ object Dimens {
     val birdOnBranchPaddingStart: Dp = 12.dp
     val birdOnBranchPaddingBottom: Dp = 12.dp
     val birdOnBranchBranchOffset: Dp = (-87).dp
+
+    val minImageAnswerSize: Dp = 100.dp
 }
