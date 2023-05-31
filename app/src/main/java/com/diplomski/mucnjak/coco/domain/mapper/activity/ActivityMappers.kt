@@ -6,5 +6,5 @@ import com.diplomski.mucnjak.coco.domain.mapper.UiMapper
 
 interface ActivityMappers {
 
-    interface ActivityMapper: UiMapper<ActiveActivityDomainModel, Activity>
+    interface ActivityMapper : UiMapper<ActiveActivityDomainModel, Activity>
 }

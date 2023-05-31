@@ -11,5 +11,6 @@ sealed class DiscussionState {
         val answers: List<Answer>,
         val selectedAnswers: List<Answer>,
         val time: String,
+        val isConfirmed: Boolean = false,
     ) : DiscussionState()
 }

@@ -8,5 +8,5 @@ class GetNextTimeUseCase @Inject constructor(
 ) : GetNextTime {
 
 
-    override suspend fun invoke() = stateMachineRepository.getNextDisplayTime()
+    override suspend fun invoke(): Int = stateMachineRepository.getNextDisplayTime()
 }

@@ -6,13 +6,15 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = DarkPurple,
-    primaryVariant = Purple,
+    primaryVariant = LightPurple,
     secondary = Purple,
-    secondaryVariant = LightPurple,
+    secondaryVariant = Purple,
     background = White,
     surface = LightPurple,
     onPrimary = White,
@@ -25,9 +27,9 @@ private val DarkColorPalette = darkColors(
 
 private val LightColorPalette = lightColors(
     primary = DarkPurple,
-    primaryVariant = Purple,
+    primaryVariant = LightPurple,
     secondary = Purple,
-    secondaryVariant = LightPurple,
+    secondaryVariant = Purple,
     background = White,
     surface = LightPurple,
     onPrimary = White,
@@ -40,9 +42,9 @@ private val LightColorPalette = lightColors(
 
 private val Student2DarkColorPalette = darkColors(
     primary = DarkBlue,
-    primaryVariant = Blue,
+    primaryVariant = LightBlue,
     secondary = Blue,
-    secondaryVariant = LightBlue,
+    secondaryVariant = Teal,
     background = White,
     surface = LightBlue,
     onPrimary = White,
@@ -55,9 +57,9 @@ private val Student2DarkColorPalette = darkColors(
 
 private val Student2LightColorPalette = lightColors(
     primary = DarkBlue,
-    primaryVariant = Blue,
+    primaryVariant = LightBlue,
     secondary = Blue,
-    secondaryVariant = LightBlue,
+    secondaryVariant = Teal,
     background = White,
     surface = LightBlue,
     onPrimary = White,
@@ -70,9 +72,9 @@ private val Student2LightColorPalette = lightColors(
 
 private val Student3DarkColorPalette = darkColors(
     primary = DarkYellow,
-    primaryVariant = Yellow,
+    primaryVariant = LightYellow,
     secondary = Yellow,
-    secondaryVariant = LightYellow,
+    secondaryVariant = Yellow,
     background = White,
     surface = LightYellow,
     onPrimary = White,
@@ -85,9 +87,9 @@ private val Student3DarkColorPalette = darkColors(
 
 private val Student3LightColorPalette = lightColors(
     primary = DarkYellow,
-    primaryVariant = Yellow,
+    primaryVariant = LightYellow,
     secondary = Yellow,
-    secondaryVariant = LightYellow,
+    secondaryVariant = Yellow,
     background = White,
     surface = LightYellow,
     onPrimary = White,
@@ -100,9 +102,9 @@ private val Student3LightColorPalette = lightColors(
 
 private val Student4DarkColorPalette = darkColors(
     primary = DarkOrange,
-    primaryVariant = Orange,
+    primaryVariant = LightOrange,
     secondary = Orange,
-    secondaryVariant = LightOrange,
+    secondaryVariant = Orange,
     background = White,
     surface = LightOrange,
     onPrimary = White,
@@ -115,9 +117,9 @@ private val Student4DarkColorPalette = darkColors(
 
 private val Student4LightColorPalette = lightColors(
     primary = DarkOrange,
-    primaryVariant = Orange,
+    primaryVariant = LightOrange,
     secondary = Orange,
-    secondaryVariant = LightOrange,
+    secondaryVariant = Orange,
     background = White,
     surface = LightOrange,
     onPrimary = White,
@@ -241,9 +243,8 @@ fun StudentCoCoTheme(studentIndex: Int, content: @Composable () -> Unit) {
 }
 
 object CustomColorPalette {
-    val hyperlink = Teal
-    val neutralBackground = VeryLightPurple
-    val buttonShadow = DarkPink
+    val neutralBackground: Color = VeryLightPurple
+    val buttonShadow: Color = DarkPink
 }
 
-val LocalCustomColor = compositionLocalOf { CustomColorPalette }
+val LocalCustomColor: ProvidableCompositionLocal<CustomColorPalette> = compositionLocalOf { CustomColorPalette }

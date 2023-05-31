@@ -1,10 +1,13 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.welcome
 
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.R
+import com.diplomski.mucnjak.coco.domain.get_string.GetString
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
 import com.diplomski.mucnjak.coco.domain.use_case.get_activity.GetActivity
 import com.diplomski.mucnjak.coco.domain.use_case.get_available_question.GetAvailableQuestion
+import com.diplomski.mucnjak.coco.domain.use_case.get_next_time.GetNextTime
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_name.GetStudentName
 import com.diplomski.mucnjak.coco.domain.use_case.rotate_student_screen.RotateStudentScreen
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_navigation_state.SubscribeToNavigationState
@@ -23,6 +26,8 @@ class WelcomeViewModel @Inject constructor(
     private val getActivity: GetActivity,
     private val confirmNextStep: ConfirmNextStep,
     private val subscribeToNavigationState: SubscribeToNavigationState,
+    private val getString: GetString,
+    private val getNextTime: GetNextTime
 ) : BaseViewModel<WelcomeState, NavigateToSolving>(WelcomeState.Initial) {
 
     init {
@@ -46,6 +51,9 @@ class WelcomeViewModel @Inject constructor(
     fun onConfirmActivityPreview(studentIndex: Int) {
         viewModelScope.launch {
             confirmNextStep(studentIndex)
+            updateState { state ->
+                (state as? WelcomeState.ActivityPreview)?.copy(isConfirmed = true) ?: state
+            }
         }
     }
 
@@ -53,13 +61,18 @@ class WelcomeViewModel @Inject constructor(
         viewModelScope.launch {
             val activity = getActivity()
             val question = getAvailableQuestion(studentIndex = studentIndex)
+            val solvingTime = getNextTime()
 
             updateState {
                 WelcomeState.ActivityPreview(
-                    studentName = getStudentName(studentIndex),
+                    studentName = getStudentName(studentIndex = studentIndex),
                     topic = activity.topic,
                     subtopic = activity.subTopic,
-                    description = "In next ${10} minutes: \n ${question.questionText}"
+                    description = getString(
+                        R.string.welcome_activity_description,
+                        solvingTime,
+                        question.questionText
+                    )
                 )
             }
         }

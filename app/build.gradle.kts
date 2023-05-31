@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import Dependencies.Compose
 import Dependencies.Hilt
 import Dependencies.Androidx

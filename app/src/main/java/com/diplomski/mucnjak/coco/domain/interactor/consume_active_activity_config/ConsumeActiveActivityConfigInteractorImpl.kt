@@ -17,7 +17,7 @@ class ConsumeActiveActivityConfigInteractorImpl @Inject constructor(
 
     override suspend fun consumeActiveActivityConfig(
         activeActivityDomainModel: ActiveActivityDomainModel
-    ) = withContext(dispatcher.io) {
+    ): ActiveActivityDomainModel = withContext(dispatcher.io) {
         val uuid = uuidRepository.getUuid()
         val config = activeActivityDomainModel.configToTablet.toMutableList()
 

@@ -3,8 +3,8 @@
 package com.diplomski.mucnjak.coco.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -53,15 +53,6 @@ private val Subtitle1 = TextStyle(
 )
 
 // Hrv: Veliki brojevi
-/**
- * Size is 50
- */
-private val LargeNumbers = TextStyle(
-    fontFamily = CocoFontFamily,
-    fontWeight = FontWeight.Bold,
-    fontSize = 33.sp,
-    letterSpacing = 0.sp,
-)
 
 /**
  * Size is 36
@@ -126,7 +117,7 @@ data class SpecialTypography(
     val Loading: TextStyle,
 )
 
-val cocoSpecialTypography = SpecialTypography(
+val cocoSpecialTypography: SpecialTypography = SpecialTypography(
     WelcomeName = TextStyle(
         fontFamily = CocoFontFamily,
         fontWeight = FontWeight.Bold,
@@ -149,14 +140,15 @@ val cocoSpecialTypography = SpecialTypography(
         fontFamily = CocoFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
-        letterSpacing = 8 .sp
+        letterSpacing = 8.sp
     ),
 )
 
-val LocalSpecialTypography = compositionLocalOf { cocoSpecialTypography }
+val LocalSpecialTypography: ProvidableCompositionLocal<SpecialTypography> =
+    compositionLocalOf { cocoSpecialTypography }
 
 // Set of Material typography styles to start with
-val Typography = Typography(
+val Typography: Typography = Typography(
     defaultFontFamily = CocoFontFamily,
     h1 = H1,
     h2 = H2,

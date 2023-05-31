@@ -14,7 +14,7 @@ class RetryNoteViewModel @Inject constructor(
     private val rotateStudentScreen: RotateStudentScreen,
     private val confirmNextStep: ConfirmNextStep,
     subscribeToNavigationState: SubscribeToNavigationState,
-) : BaseViewModel<RetryNoteState, RetryNoteNavigationEvent>(RetryNoteState.Initial) {
+) : BaseViewModel<RetryNoteState, RetryNoteNavigationEvent>(RetryNoteState.Initial()) {
 
     init {
         viewModelScope.launch {
@@ -33,6 +33,9 @@ class RetryNoteViewModel @Inject constructor(
     fun confirmStudentNextStep(studentIndex: Int) {
         viewModelScope.launch {
             confirmNextStep(studentIndex = studentIndex)
+            updateState { state ->
+                (state as? RetryNoteState.Initial)?.copy(isConfirmed = true) ?: state
+            }
         }
     }
 }

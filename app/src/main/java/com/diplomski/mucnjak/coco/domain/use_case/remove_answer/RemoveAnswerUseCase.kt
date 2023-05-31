@@ -8,7 +8,7 @@ class RemoveAnswerUseCase @Inject constructor(
     private val studentRepository: StudentRepository,
 ) : RemoveAnswer {
 
-    override fun invoke(studentIndex: Int, answer: Answer) = studentRepository.removeAnswer(
+    override fun invoke(studentIndex: Int, answer: Answer): Unit = studentRepository.removeAnswer(
         studentIndex = studentIndex,
         answer = answer
     )

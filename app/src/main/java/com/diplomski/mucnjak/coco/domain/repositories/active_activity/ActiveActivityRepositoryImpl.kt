@@ -14,13 +14,13 @@ class ActiveActivityRepositoryImpl @Inject constructor(
 
     private var activeActivity: ActiveActivityDomainModel? = null
 
-    override suspend fun getActiveActivity() = activeActivity
+    override suspend fun getActiveActivity(): ActiveActivityDomainModel = activeActivity
         ?: getActiveActivityInteractor.getActiveActivity().let {
             activeActivity = consumeActiveActivityConfigInteractor.consumeActiveActivityConfig(it)
             return@let activeActivity ?: throw IllegalStateException()
         }
 
-    override fun getLocalActiveActivity() = activeActivity
+    override fun getLocalActiveActivity(): ActiveActivityDomainModel? = activeActivity
 
     override fun clearRepository() {
         activeActivity = null

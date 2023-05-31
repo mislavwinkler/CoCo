@@ -1,5 +1,6 @@
 package com.diplomski.mucnjak.coco.domain.use_case.get_all_questions
 
+import com.diplomski.mucnjak.coco.data.ui.Question
 import com.diplomski.mucnjak.coco.domain.mapper.question.QuestionsMappers
 import com.diplomski.mucnjak.coco.domain.repositories.active_activity.ActiveActivityRepository
 import javax.inject.Inject
@@ -9,6 +10,6 @@ class GetAllQuestionsUseCase @Inject constructor(
     private val questionMapper: QuestionsMappers.QuestionMapper
 ) : GetAllQuestions {
 
-    override suspend fun invoke() =
+    override suspend fun invoke(): List<Question> =
         questionMapper.mapToUiModel(activeActivityRepository.getActiveActivity())
 }

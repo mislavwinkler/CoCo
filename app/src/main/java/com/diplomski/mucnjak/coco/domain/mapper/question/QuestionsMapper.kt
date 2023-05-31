@@ -10,12 +10,12 @@ class QuestionsMapper @Inject constructor(
     private val answersMapper: AnswerMappers.AnswersMapper
 ) : QuestionsMappers.QuestionMapper {
 
-    override fun mapToUiModel(domainModel: ActiveActivityDomainModel) =
+    override fun mapToUiModel(domainModel: ActiveActivityDomainModel): List<Question> =
         domainModel.answers
             .asSequence()
             .groupBy { domainModel.questions[it.value] }
             .mapValues { mapEntry ->
-                mapEntry.value.map { answer -> answer.key }
+                mapEntry.value.map { (key) -> key }
             }
             .map {
                 Question(

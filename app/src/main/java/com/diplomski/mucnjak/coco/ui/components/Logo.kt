@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.diplomski.mucnjak.coco.R
+import com.diplomski.mucnjak.coco.ui.ComposeMock
 import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
 
 private const val LOGO_ALPHA = 0.1f
@@ -24,7 +25,7 @@ fun Logo(modifier: Modifier = Modifier) {
 }
 
 @Composable
-@Preview(device = SAMSUNG_SM_X200)
+@Preview(showSystemUi = true, device = ComposeMock.SAMSUNG_SM_X200)
 private fun PreviewLogo() {
     CoCoTheme {
         Logo()

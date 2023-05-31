@@ -14,9 +14,9 @@ import com.diplomski.mucnjak.coco.ui.split_screen.SplitScreen
 
 abstract class Screen(private val routePath: String) {
 
-    operator fun invoke() = routePath
+    operator fun invoke(): String = routePath
 
-    fun add(pathEnd: String) = "${this()}/$pathEnd"
+    fun add(pathEnd: String): String = "${this()}/$pathEnd"
 }
 
 sealed class Route {

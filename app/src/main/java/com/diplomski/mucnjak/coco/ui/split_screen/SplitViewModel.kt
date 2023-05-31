@@ -1,6 +1,5 @@
 package com.diplomski.mucnjak.coco.ui.split_screen
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.get_num_of_students.GetNumOfStudents
@@ -39,7 +38,6 @@ class SplitViewModel @Inject constructor(
             for (i in 0 until numOfStudents) {
                 launch {
                     subscribeToStudentRotation(i).collect { newRotation ->
-                        Log.d("JakovLogs", "JakovLogs $newRotation rotation")
                         updateState { state ->
                             (state as? SplitState.Initial)?.run {
                                 copy(

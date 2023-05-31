@@ -8,6 +8,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+private const val TABLET_CONFIG_SHARED_PREFS = "com.diplomski.mucnjak.coco.TABLET_CONFIG"
+
 @Module
 @InstallIn(SingletonComponent::class)
 class UuidRepositoryModule {
@@ -15,5 +17,10 @@ class UuidRepositoryModule {
     @Provides
     @Singleton
     fun provideUuidRepository(@ApplicationContext context: Context): UuidRepository =
-        UuidRepositoryImpl(context.getSharedPreferences("com.diplomski.mucnjak.coco.TABLET_CONFIG", Context.MODE_PRIVATE))
+        UuidRepositoryImpl(
+            context.getSharedPreferences(
+                TABLET_CONFIG_SHARED_PREFS,
+                Context.MODE_PRIVATE
+            )
+        )
 }

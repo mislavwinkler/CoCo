@@ -7,5 +7,5 @@ class IsActivityLoadedUseCase @Inject constructor(
     private val activeActivityRepository: ActiveActivityRepository
 ) : IsActivityLoaded {
 
-    override fun invoke() = activeActivityRepository.getLocalActiveActivity() != null
+    override fun invoke(): Boolean = activeActivityRepository.getLocalActiveActivity() != null
 }

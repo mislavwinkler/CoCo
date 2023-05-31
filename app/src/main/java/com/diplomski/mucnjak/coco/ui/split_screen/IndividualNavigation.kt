@@ -21,25 +21,25 @@ import com.diplomski.mucnjak.coco.ui.split_screen.welcome.WelcomeScreen
 
 abstract class Screen(private val routePath: String) {
 
-    operator fun invoke() = routePath
+    operator fun invoke(): String = routePath
 
-    fun add(pathEnd: String) = "${this()}/$pathEnd"
+    fun add(pathEnd: String): String = "${this()}/$pathEnd"
 }
 
 sealed class Route {
     object StudentInputScreen : Screen(routePath = "root")
 
-    object SetupScreen : Screen(StudentInputScreen.add(pathEnd ="setup"))
+    object SetupScreen : Screen(StudentInputScreen.add(pathEnd = "setup"))
 
-    object WelcomeScreen : Screen(SetupScreen.add(pathEnd ="welcome"))
+    object WelcomeScreen : Screen(SetupScreen.add(pathEnd = "welcome"))
 
-    object SolvingScreen : Screen(WelcomeScreen.add(pathEnd ="solving"))
+    object SolvingScreen : Screen(WelcomeScreen.add(pathEnd = "solving"))
 
-    object IncorrectSolutionScreen : Screen(SolvingScreen.add(pathEnd ="incorrect_solution"))
+    object IncorrectSolutionScreen : Screen(SolvingScreen.add(pathEnd = "incorrect_solution"))
 
-    object DiscussionScreen : Screen(IncorrectSolutionScreen.add(pathEnd ="discussion"))
+    object DiscussionScreen : Screen(IncorrectSolutionScreen.add(pathEnd = "discussion"))
 
-    object RetryNoteScreen : Screen(DiscussionScreen.add(pathEnd ="retry_note"))
+    object RetryNoteScreen : Screen(DiscussionScreen.add(pathEnd = "retry_note"))
 
     object FinishNoteScreen : Screen(SolvingScreen.add(pathEnd = "finish_note"))
 }

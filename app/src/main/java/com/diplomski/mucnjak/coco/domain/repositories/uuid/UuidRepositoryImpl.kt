@@ -14,7 +14,7 @@ class UuidRepositoryImpl @Inject constructor(
 
     private var uuid: UUID? = null
 
-    override fun getUuid() = uuid
+    override fun getUuid(): UUID = uuid
         ?: sharedPrefs.getString(UUID_SHARED_PREF_KEY, null)?.let {
             uuid = UUID.fromString(it)
             return@let uuid

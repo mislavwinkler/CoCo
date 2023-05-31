@@ -7,5 +7,5 @@ class ResetStateMachineUseCase @Inject constructor(
     private val stateMachineRepository: StateMachineRepository
 ) : ResetStateMachine {
 
-    override suspend fun invoke() = stateMachineRepository.reset()
+    override suspend fun invoke(): Unit = stateMachineRepository.reset()
 }

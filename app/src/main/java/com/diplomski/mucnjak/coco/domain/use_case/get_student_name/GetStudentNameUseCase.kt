@@ -6,7 +6,8 @@ import javax.inject.Inject
 
 class GetStudentNameUseCase @Inject constructor(
     private val studentRepository: StudentRepository,
-): GetStudentName {
+) : GetStudentName {
 
-    override fun invoke(studentIndex: Int) = studentRepository.getStudent(studentIndex)?.name ?: String.empty
+    override fun invoke(studentIndex: Int): String =
+        studentRepository.getStudent(studentIndex)?.name ?: String.empty
 }

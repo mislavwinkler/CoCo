@@ -18,13 +18,14 @@ class ReleaseActivityConfigInteractorImpl @Inject constructor(
     private val uuidRepository: UuidRepository,
 ) : ReleaseActivityConfigInteractor {
 
-    override suspend fun releaseActivityConfig() = withContext(dispatcher.io) {
+    override suspend fun releaseActivityConfig(): Unit = withContext(dispatcher.io) {
         val activityId = activeActivityRepository.getActiveActivity().id
         val activity = firestore.collection(FirestorePaths.ACTIVE_ACTIVITY_COLLECTION)
             .document(activityId)
             .get()
             .await()
-            .toObject(ActiveActivityResponse::class.java) ?: throw NoDocumentException("Can't release activity config from ${FirestorePaths.ACTIVE_ACTIVITY_COLLECTION} because document can't be found")
+            .toObject(ActiveActivityResponse::class.java)
+            ?: throw NoDocumentException("Can't release activity config from ${FirestorePaths.ACTIVE_ACTIVITY_COLLECTION} because document can't be found")
 
         val updatedConfig = activity.configToTablet.toMutableList()
         updatedConfig[updatedConfig.indexOf(uuidRepository.getUuid().toString())] = null

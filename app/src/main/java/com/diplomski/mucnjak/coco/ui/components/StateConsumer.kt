@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import com.diplomski.mucnjak.coco.ui.base.BaseViewModel
 
 @Composable
-fun <State, NavigationEvent, ViewModel: BaseViewModel<State, NavigationEvent>> ViewModel.OnState(
+fun <State, NavigationEvent, ViewModel : BaseViewModel<State, NavigationEvent>> ViewModel.OnState(
     onState: @Composable (state: State) -> Unit
 ) {
     val state by state.collectAsState()
@@ -14,7 +14,7 @@ fun <State, NavigationEvent, ViewModel: BaseViewModel<State, NavigationEvent>> V
 }
 
 @Composable
-fun <State, NavigationEvent, ViewModel: BaseViewModel<State, NavigationEvent>> ViewModel.OnNavigationEvent(
+fun <State, NavigationEvent, ViewModel : BaseViewModel<State, NavigationEvent>> ViewModel.OnNavigationEvent(
     onNavigationEvent: @Composable (event: NavigationEvent) -> Unit
 ) {
     val event by navigationEvent.collectAsState()

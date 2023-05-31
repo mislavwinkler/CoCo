@@ -7,6 +7,6 @@ class ConfirmNextStepUseCase @Inject constructor(
     private val stateMachineRepository: StateMachineRepository
 ) : ConfirmNextStep {
 
-    override suspend fun invoke(studentIndex: Int) =
+    override suspend fun invoke(studentIndex: Int): Unit =
         stateMachineRepository.confirmNextStep(studentIndex)
 }

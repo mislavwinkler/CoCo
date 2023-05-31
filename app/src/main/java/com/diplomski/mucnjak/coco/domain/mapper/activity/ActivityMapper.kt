@@ -4,9 +4,9 @@ import com.diplomski.mucnjak.coco.data.domain.ActiveActivityDomainModel
 import com.diplomski.mucnjak.coco.data.ui.Activity
 import javax.inject.Inject
 
-class ActivityMapper @Inject constructor(): ActivityMappers.ActivityMapper {
+class ActivityMapper @Inject constructor() : ActivityMappers.ActivityMapper {
 
-    override fun mapToUiModel(domainModel: ActiveActivityDomainModel) = Activity(
+    override fun mapToUiModel(domainModel: ActiveActivityDomainModel): Activity = Activity(
         topic = domainModel.topic,
         subTopic = domainModel.subTopic,
         numOfStudent = domainModel.activeNumOfStudents

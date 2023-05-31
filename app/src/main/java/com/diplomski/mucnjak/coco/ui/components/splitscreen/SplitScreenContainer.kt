@@ -2,13 +2,15 @@ package com.diplomski.mucnjak.coco.ui.components.splitscreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.diplomski.mucnjak.coco.extensions.pxToDp
 
-val LocalSize = compositionLocalOf { IntSize(0, 0) }
+val LocalIsPortrait: ProvidableCompositionLocal<Boolean> = compositionLocalOf { false }
+val LocalIsLarge: ProvidableCompositionLocal<Boolean> = compositionLocalOf { false }
 
 @Composable
 fun SplitScreenContainer(
@@ -22,12 +24,16 @@ fun SplitScreenContainer(
                 add { rotation ->
                     val localRotation = rotation + rotations[index]
                     var size by remember(key1 = IntSize(0, 0)) { mutableStateOf(IntSize(0, 0)) }
-                    CompositionLocalProvider(LocalSize provides size) {
+                    CompositionLocalProvider(
+                        LocalIsPortrait provides (size.width < size.height && (localRotation % 180 == 0f) || (size.width > size.height && (localRotation % 180 != 0f))),
+                        LocalIsLarge provides (numOfScreens <= 2)
+                    ) {
                         Box(
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight()
-                                .onSizeChanged { size = it }
+                                .onSizeChanged { size = it },
+                            contentAlignment = Alignment.Center
                         ) {
                             Box(
                                 if (localRotation % 180 != 0f) {
@@ -49,7 +55,6 @@ fun SplitScreenContainer(
         when (numOfScreens) {
             1 -> Row { screen(0) }
             2 -> PairContainer(screens = screens)
-            3 -> GridContainer(screens = screens)
             else -> GridContainer(screens = screens)
         }
     }

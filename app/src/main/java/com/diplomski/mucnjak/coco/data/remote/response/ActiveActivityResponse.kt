@@ -1,5 +1,3 @@
-@file:Suppress("SpellCheckingInspection", "SpellCheckingInspection")
-
 package com.diplomski.mucnjak.coco.data.remote.response
 
 import com.diplomski.mucnjak.coco.extensions.empty

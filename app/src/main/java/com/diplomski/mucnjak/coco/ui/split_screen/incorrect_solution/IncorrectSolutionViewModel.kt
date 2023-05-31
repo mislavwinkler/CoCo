@@ -17,14 +17,18 @@ class IncorrectSolutionViewModel @Inject constructor(
     private val confirmNextStep: ConfirmNextStep,
     getNextTime: GetNextTime,
     subscribeToNavigationState: SubscribeToNavigationState,
-) : BaseViewModel<IncorrectSolutionState, IncorrectSolutionNavigationEvent>(IncorrectSolutionState.Initial) {
+) : BaseViewModel<IncorrectSolutionState, IncorrectSolutionNavigationEvent>(
+    IncorrectSolutionState.Initial
+) {
 
     init {
         viewModelScope.launch {
             launch {
                 subscribeToNavigationState().collect {
                     if (it == State.DISCUSSION) {
-                        setNavigationEvent(event = IncorrectSolutionNavigationEvent.NavigateToDiscussion)
+                        setNavigationEvent(
+                            event = IncorrectSolutionNavigationEvent.NavigateToDiscussion
+                        )
                     }
                 }
             }
@@ -46,6 +50,9 @@ class IncorrectSolutionViewModel @Inject constructor(
     fun confirmStudentNextStep(studentIndex: Int) {
         viewModelScope.launch {
             confirmNextStep(studentIndex = studentIndex)
+            updateState { state ->
+                (state as? IncorrectSolutionState.Note)?.copy(isConfirmed = true) ?: state
+            }
         }
     }
 

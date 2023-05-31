@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diplomski.mucnjak.coco.R
 import com.diplomski.mucnjak.coco.shared.DoNothing
+import com.diplomski.mucnjak.coco.ui.ComposeMock
 import com.diplomski.mucnjak.coco.ui.components.*
 import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
 import com.diplomski.mucnjak.coco.ui.theme.Dimens
@@ -143,7 +144,10 @@ private fun LoadedState(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colors.secondary,
             )
-            KeyValueText(key = stringResource(R.string.group_size), value = state.numOfStudents.toString())
+            KeyValueText(
+                key = stringResource(R.string.group_size),
+                value = state.numOfStudents.toString()
+            )
             KeyValueText(key = stringResource(R.string.topic), value = state.topic)
             KeyValueText(key = stringResource(R.string.subtopic), value = state.subTopic)
         }
@@ -199,7 +203,7 @@ private fun HomeContent(
     }
 }
 
-@Preview(showSystemUi = true, device = SAMSUNG_SM_X200)
+@Preview(showSystemUi = true, device = ComposeMock.SAMSUNG_SM_X200)
 @Composable
 private fun PreviewLoading() {
     CoCoTheme {
@@ -212,7 +216,7 @@ private fun PreviewLoading() {
     }
 }
 
-@Preview(showSystemUi = true, device = SAMSUNG_SM_X200)
+@Preview(showSystemUi = true, device = ComposeMock.SAMSUNG_SM_X200)
 @Composable
 private fun PreviewFailed() {
     CoCoTheme {
@@ -225,12 +229,12 @@ private fun PreviewFailed() {
     }
 }
 
-@Preview(showSystemUi = true, device = SAMSUNG_SM_X200)
+@Preview(showSystemUi = true, device = ComposeMock.SAMSUNG_SM_X200)
 @Composable
 private fun PreviewLoaded() {
     CoCoTheme {
         HandleState(
-            state = HomeState.Loaded(2, "Topic title", "Subtopic title"),
+            state = HomeState.Loaded(2, ComposeMock.TOPIC, ComposeMock.SUBTOPIC),
             loadActivity = { DoNothing },
             clearConfiguration = { DoNothing },
             start = { DoNothing }

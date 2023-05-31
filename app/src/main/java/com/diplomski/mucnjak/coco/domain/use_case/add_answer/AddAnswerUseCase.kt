@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 class AddAnswerUseCase @Inject constructor(
     private val studentRepository: StudentRepository
-): AddAnswer {
+) : AddAnswer {
 
-    override fun invoke(studentIndex: Int, answer: Answer) = studentRepository.addAnswer(
+    override fun invoke(studentIndex: Int, answer: Answer): Unit = studentRepository.addAnswer(
         studentIndex = studentIndex,
         answer = answer
     )

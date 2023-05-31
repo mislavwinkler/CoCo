@@ -1,22 +1,22 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.discussion
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.diplomski.mucnjak.coco.data.ui.Answer
+import com.diplomski.mucnjak.coco.extensions.addWithSize
 import com.diplomski.mucnjak.coco.shared.DoNothing
-import com.diplomski.mucnjak.coco.ui.components.ConfirmButton
-import com.diplomski.mucnjak.coco.ui.components.OnNavigationEvent
-import com.diplomski.mucnjak.coco.ui.components.OnState
-import com.diplomski.mucnjak.coco.ui.components.RotateButton
+import com.diplomski.mucnjak.coco.ui.ComposeMock
+import com.diplomski.mucnjak.coco.ui.components.*
 import com.diplomski.mucnjak.coco.ui.components.answer_container.AnswerContainer
 import com.diplomski.mucnjak.coco.ui.split_screen.LocalStudentIndex
-import com.diplomski.mucnjak.coco.ui.split_screen.solving.AnswerContainers
+import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
+import com.diplomski.mucnjak.coco.ui.theme.Dimens
 
 @Composable
 fun DiscussionScreen(navigateToRetry: () -> Unit) {
@@ -36,13 +36,9 @@ private fun Content(
         when (state) {
             DiscussionState.Initial -> DoNothing
             is DiscussionState.Discussion -> Discussion(
-                studentName = state.studentName,
-                time = state.time,
-                question = state.question,
-                answers = state.answers,
-                selectedAnswers = state.selectedAnswers,
+                state = state,
                 rotateScreen = { viewModel.rotateScreen(index) },
-                confirmDiscussionEnd = { viewModel.confirmStudentNextStep(index) }
+                confirmNext = { viewModel.confirmStudentNextStep(index) }
             )
         }
     }
@@ -56,61 +52,65 @@ private fun Content(
 
 @Composable
 private fun Discussion(
-    studentName: String,
-    time: String,
-    question: String,
-    answers: List<Answer>,
-    selectedAnswers: List<Answer>,
+    state: DiscussionState.Discussion,
     rotateScreen: () -> Unit,
-    confirmDiscussionEnd: () -> Unit,
+    confirmNext: () -> Unit,
 ) {
     Column(
-        modifier = Modifier.padding(start = 26.667.dp, top = 26.667.dp, end = 20.dp, bottom = 20.dp)
+        modifier = Modifier.padding(all = Dimens.x2)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(
-                text = studentName,
-                style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.primary,
-            )
-            Text(
-                text = time,
-                style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.primary,
-            )
-        }
+        InteractionHeader(
+            title = state.studentName,
+            time = state.time,
+        )
         Text(
-            modifier = Modifier.padding(top = 16.dp),
-            text = question,
+            modifier = Modifier.padding(top = Dimens.x2),
+            text = state.question,
             style = MaterialTheme.typography.body1,
             color = MaterialTheme.colors.primary
         )
-        AnswerContainers(
-            modifier = Modifier.padding(top = 16.dp),
+        AnswersContainer(
+            modifier = Modifier.padding(top = Dimens.x2),
         ) { modifier ->
             AnswerContainer(
                 modifier = modifier,
-                answers = answers,
+                answers = state.answers,
                 onAnswerClick = { DoNothing }
             )
             AnswerContainer(
                 modifier = modifier,
-                answers = selectedAnswers,
+                answers = state.selectedAnswers,
                 onAnswerClick = { DoNothing }
             )
         }
-        Row(
+        RotateConfirmContainer(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            RotateButton { rotateScreen() }
-            ConfirmButton { confirmDiscussionEnd() }
-        }
+                .addWithSize(
+                    addOnLarge = { padding(top = Dimens.x1) },
+                    addOnSmall = { padding(top = Dimens.x0_5) }
+                ),
+            onRotate = rotateScreen,
+            onConfirm = confirmNext,
+            isConfirmed = state.isConfirmed,
+        )
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true, device = ComposeMock.SAMSUNG_SM_X200)
+private fun PreviewDiscussion() {
+    CoCoTheme {
+        Discussion(
+            state = DiscussionState.Discussion(
+                studentName = ComposeMock.STUDENT_NAME,
+                time = ComposeMock.TIME,
+                question = ComposeMock.QUESTION_TEXT,
+                answers = ComposeMock.buildAnswersWithIncorrectList(),
+                selectedAnswers = ComposeMock.buildAnswersWithIncorrectList(),
+            ),
+            rotateScreen = { DoNothing },
+            confirmNext = { DoNothing }
+        )
     }
 }
 

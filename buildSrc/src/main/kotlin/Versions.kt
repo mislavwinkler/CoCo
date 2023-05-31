@@ -1,51 +1,48 @@
 object Versions {
 
     // Android
-    const val androidApplication = "7.4.1"
+    const val androidApplication: String = "7.4.1"
 
     // Kotlin
-    const val kotlin = "1.8.10"
+    const val kotlin: String = "1.8.10"
 
     // KotlinX
-    const val kotlinxCoroutinesPlayServices = "1.3.9"
+    const val kotlinxCoroutinesPlayServices: String = "1.3.9"
 
     // Androidx
-    const val coreKtx = "1.9.0"
-    const val coreSplashScreen = "1.0.1"
+    const val coreKtx: String = "1.9.0"
+    const val coreSplashScreen: String = "1.0.1"
 
     // Lifecycle
-    const val lifecycleRuntimeKtx = "2.6.1"
-    const val lifecycleViewmodelKtx = "2.3.1"
-    const val lifecyclycleLivedataKtx = "2.3.1"
+    const val lifecycleRuntimeKtx: String = "2.6.1"
+    const val lifecycleViewmodelKtx: String = "2.3.1"
+    const val lifecyclycleLivedataKtx: String = "2.3.1"
 
     // Junit
-    const val androidxJunit = "1.1.5"
-
-    // Espresso
-    const val espresso = "3.5.1"
+    const val androidxJunit: String = "1.1.5"
 
     // Compose
-    const val compose = "1.4.0"
-    const val composeActivity = "1.7.0"
-    const val composeViewmodel = "2.5.1"
-    const val composeNavigation = "2.5.3"
+    const val compose: String = "1.4.0"
+    const val composeActivity: String = "1.7.0"
+    const val composeViewmodel: String = "2.5.1"
+    const val composeNavigation: String = "2.5.3"
 
-    const val composeCompiler = "1.4.4"
+    const val composeCompiler: String = "1.4.4"
 
     // Hilt
-    const val hilt = "2.44"
+    const val hilt: String = "2.44"
 
-    const val hiltNavigationCompose = "1.0.0"
+    const val hiltNavigationCompose: String = "1.0.0"
 
     // Junit
-    const val junit = "4.13.2"
+    const val junit: String = "4.13.2"
 
     // Firebase
-    const val firebaseBom = "32.0.0"
+    const val firebaseBom: String = "32.0.0"
 
     // Google services
-    const val googleServices = "4.3.15"
+    const val googleServices: String = "4.3.15"
 
     // Glide
-    const val glideCompose = "1.0.0-alpha.1"
+    const val glideCompose: String = "1.0.0-alpha.1"
 }

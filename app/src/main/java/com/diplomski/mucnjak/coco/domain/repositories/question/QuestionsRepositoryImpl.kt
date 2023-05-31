@@ -20,7 +20,7 @@ class QuestionsRepositoryImpl @Inject constructor(
 
     private val mutex = Mutex()
 
-    override suspend fun getAvailableQuestion(studentIndex: Int) = studentQuestion[studentIndex]
+    override suspend fun getAvailableQuestion(studentIndex: Int): Question = studentQuestion[studentIndex]
         ?: mutex.withLock {
             if (availableQuestions.isEmpty()) {
                 availableQuestions.addAll(
@@ -46,5 +46,5 @@ class QuestionsRepositoryImpl @Inject constructor(
         studentQuestion.clear()
     }
 
-    override fun getAllActiveQuestions() = studentQuestion.values.toList()
+    override fun getAllActiveQuestions(): List<Question> = studentQuestion.values.toList()
 }

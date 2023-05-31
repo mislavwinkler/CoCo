@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class SubscribeToNavigationStateUseCase @Inject constructor(
     private val stateMachineRepository: StateMachineRepository,
-): SubscribeToNavigationState {
+) : SubscribeToNavigationState {
 
     override fun invoke(): Flow<State> = stateMachineRepository.navigate
 }

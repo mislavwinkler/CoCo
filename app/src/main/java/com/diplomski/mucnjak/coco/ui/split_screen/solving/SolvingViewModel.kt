@@ -1,5 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.solving
 
+import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
 import com.diplomski.mucnjak.coco.data.ui.Answer
 import com.diplomski.mucnjak.coco.data.ui.Question
@@ -15,6 +16,7 @@ import com.diplomski.mucnjak.coco.domain.use_case.revoke_next_step_confirmation.
 import com.diplomski.mucnjak.coco.domain.use_case.rotate_student_screen.RotateStudentScreen
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_navigation_state.SubscribeToNavigationState
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_timer_ticks.SubscribeToTimerTicks
+import com.diplomski.mucnjak.coco.extensions.empty
 import com.diplomski.mucnjak.coco.shared.DoNothing
 import com.diplomski.mucnjak.coco.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +41,8 @@ class SolvingViewModel @Inject constructor(
     private var question: Question? = null
     private val answers: MutableList<Answer> = mutableListOf()
     private val selectedAnswers: MutableList<Answer> = mutableListOf()
-    private var time: Int = 0
+    private var time: String = String.empty
+
 
     fun init(index: Int) {
         viewModelScope.launch {
@@ -56,16 +59,17 @@ class SolvingViewModel @Inject constructor(
                     question = question?.questionText ?: throw IllegalStateException(),
                     answers = answers,
                     selectedAnswers = selectedAnswers,
-                    time = time.toString(),
+                    time = time,
                 )
             }
 
             launch {
                 subscribeToTimerTicks().collect { time ->
-                    this@SolvingViewModel.time = time
+                    this@SolvingViewModel.time = DateUtils.formatElapsedTime(time.toLong())
                     setState {
-                        (it as? SolvingState.Solving)?.copy(time = "$time")
-                            ?: (it as? SolvingState.Congratulations)?.copy(time = "$time") ?: it
+                        (it as? SolvingState.Solving)?.copy(time = this@SolvingViewModel.time)
+                            ?: (it as? SolvingState.Congratulations)?.copy(time = this@SolvingViewModel.time)
+                            ?: it
                     }
                 }
             }
@@ -112,7 +116,7 @@ class SolvingViewModel @Inject constructor(
             (state as? SolvingState.Solving)?.copy(
                 answers = answers.toList(),
                 selectedAnswers = selectedAnswers.toList(),
-                time = time.toString()
+                time = time
             ) ?: state
         }
     }
@@ -125,7 +129,7 @@ class SolvingViewModel @Inject constructor(
             (state as? SolvingState.Solving)?.let {
                 SolvingState.Congratulations(
                     studentName = state.studentName,
-                    time = time.toString()
+                    time = time
                 )
             } ?: state
         }
@@ -142,7 +146,7 @@ class SolvingViewModel @Inject constructor(
                     question = question?.questionText ?: throw IllegalStateException(),
                     answers = answers.toList(),
                     selectedAnswers = selectedAnswers.toList(),
-                    time = time.toString()
+                    time = time
                 )
             } ?: state
         }

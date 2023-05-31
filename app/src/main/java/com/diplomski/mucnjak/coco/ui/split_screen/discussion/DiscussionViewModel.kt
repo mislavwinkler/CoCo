@@ -1,5 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.discussion
 
+import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.add_incorrect_answer_info.AddIncorrectAnswerInfo
@@ -8,9 +9,11 @@ import com.diplomski.mucnjak.coco.domain.use_case.get_all_answers.GetAllAnswers
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_answers.GetStudentAnswers
 import com.diplomski.mucnjak.coco.domain.use_case.get_available_question.GetAvailableQuestion
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_name.GetStudentName
+import com.diplomski.mucnjak.coco.domain.use_case.revoke_next_step_confirmation.RevokeNextStepConfirmation
 import com.diplomski.mucnjak.coco.domain.use_case.rotate_student_screen.RotateStudentScreen
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_navigation_state.SubscribeToNavigationState
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_timer_ticks.SubscribeToTimerTicks
+import com.diplomski.mucnjak.coco.extensions.empty
 import com.diplomski.mucnjak.coco.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,11 +28,13 @@ class DiscussionViewModel @Inject constructor(
     private val getAllAnswers: GetAllAnswers,
     private val addIncorrectAnswerInfo: AddIncorrectAnswerInfo,
     private val getStudentAnswers: GetStudentAnswers,
+    private val revokeNextStepConfirmation: RevokeNextStepConfirmation,
     subscribeToNavigationState: SubscribeToNavigationState,
     subscribeToTimerTicks: SubscribeToTimerTicks,
 ) : BaseViewModel<DiscussionState, DiscussionNavigationEvent>(DiscussionState.Initial) {
 
-    private var time: Int = 0
+    private var time: String = String.empty
+    private var isConfirmed = false
 
     init {
         viewModelScope.launch {
@@ -44,9 +49,9 @@ class DiscussionViewModel @Inject constructor(
 
             launch {
                 subscribeToTimerTicks().collect { time ->
-                    this@DiscussionViewModel.time = time
+                    this@DiscussionViewModel.time = DateUtils.formatElapsedTime(time.toLong())
                     updateState { state ->
-                        (state as? DiscussionState.Discussion)?.copy(time = this@DiscussionViewModel.time.toString())
+                        (state as? DiscussionState.Discussion)?.copy(time = this@DiscussionViewModel.time)
                             ?: state
                     }
                 }
@@ -60,13 +65,28 @@ class DiscussionViewModel @Inject constructor(
         }
     }
 
+
     fun confirmStudentNextStep(studentIndex: Int) {
-        viewModelScope.launch {
-            confirmNextStep(studentIndex = studentIndex)
+        if (isConfirmed) {
+            viewModelScope.launch {
+                revokeNextStepConfirmation(studentIndex = studentIndex)
+                updateState { state ->
+                    (state as? DiscussionState.Discussion)?.copy(isConfirmed = false) ?: state
+                }
+            }
+        } else {
+            viewModelScope.launch {
+                confirmNextStep(studentIndex = studentIndex)
+                updateState { state ->
+                    (state as? DiscussionState.Discussion)?.copy(isConfirmed = true) ?: state
+                }
+            }
         }
     }
 
     fun init(studentIndex: Int) {
+        isConfirmed = false
+        time = String.empty
         viewModelScope.launch {
             val selectedAnswers = getStudentAnswers(studentIndex)
             val answers = getAllAnswers() - selectedAnswers.toSet()
@@ -78,7 +98,7 @@ class DiscussionViewModel @Inject constructor(
                     question = question.questionText,
                     answers = addIncorrectAnswerInfo(answers),
                     selectedAnswers = addIncorrectAnswerInfo(selectedAnswers),
-                    time = "0"
+                    time = time
                 )
             }
         }

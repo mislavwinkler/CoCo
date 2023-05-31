@@ -11,4 +11,24 @@
     <string name="topic">Topic:</string>
     <string name="subtopic">Subtopic:</string>
     <string name="loading">Loading</string>
+    <string name="hi">Hi,</string>
+    <string name="exclamation_name">%s!</string>
+    <string name="rotate_setup_description">"Rotate the screen if it doesn't suit you and confirm by clicking on the check mark."</string>
+    <string name="subtopic_separator">| %s</string>
+    <string name="welcome_activity_description">In next %d minutes:\n%s.</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="congratulations_wait_for_others">Wait for others to finish.</string>
+    <string name="go_back_to_solving">Go back to solving</string>
+    <string name="something_is_wrong">Something is wrong!</string>
+    <string name="discussion_description">You have %s minutes to discuss your solutions and then try again.</string>
+    <string name="discussion_additional_description">In this section you cannot change your answers.</string>
+    <string name="try_again">Try again!</string>
+    <string name="retry_description">Now that you have discussed, try to correct you answers.</string>
+    <string name="practice_finished">Practice is finished!</string>
+    <string name="finish_description">Let\'s go see your results</string>
+    <string name="solutions">Solutions</string>
+    <string name="solutions_for_question">"Solutions for:\n%s"</string>
+    <string name="finish">Finish</string>
+    <string name="congratulations_description">You handled this great, keep it up!\nThe exercise is over, call the teacher.!</string>
+    <string name="return_to_solutions">Return to solutions</string>
 </resources>

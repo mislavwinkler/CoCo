@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class AnswersMapper @Inject constructor() : AnswerMappers.AnswersMapper {
 
-    override fun mapToUiModel(domainModel: AnswersDomainModel) =
+    override fun mapToUiModel(domainModel: AnswersDomainModel): List<Answer> =
         domainModel.answers.map { Answer(it, domainModel.answerType) }.toList()
 }

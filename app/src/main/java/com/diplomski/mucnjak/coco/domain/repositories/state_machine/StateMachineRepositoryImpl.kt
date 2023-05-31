@@ -46,7 +46,7 @@ class StateMachineRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun confirmNextStep(studentIndex: Int) = withContext(dispatcher.io) {
+    override suspend fun confirmNextStep(studentIndex: Int): Unit = withContext(dispatcher.io) {
         mutex.withLock {
             studentConfirmation[studentIndex] = true
             if (studentConfirmation.values.all { it }) {
@@ -55,11 +55,12 @@ class StateMachineRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun revokeNextStepConfirmation(studentIndex: Int) = withContext(dispatcher.io) {
-        mutex.withLock {
-            studentConfirmation[studentIndex] = false
+    override suspend fun revokeNextStepConfirmation(studentIndex: Int): Unit =
+        withContext(dispatcher.io) {
+            mutex.withLock {
+                studentConfirmation[studentIndex] = false
+            }
         }
-    }
 
 // NAME INPUT
 // SETUP
@@ -130,7 +131,9 @@ class StateMachineRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getNextDisplayTime(): Int = withContext(dispatcher.io) {
-        if (state == State.INCORRECT_SOLUTION_NOTE && hasNextStep()) {
+        if (state == State.WELCOME) {
+            activeActivityRepository.getActiveActivity().solvingTime
+        } else if (state == State.INCORRECT_SOLUTION_NOTE && hasNextStep()) {
             activeActivityRepository.getActiveActivity().discussionTimes[iteration]
         } else {
             throw IllegalStateException()

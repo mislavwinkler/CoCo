@@ -22,9 +22,9 @@ class SetupViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             launch {
-                subscribeToNavigationState().collect {
-                    if (it == State.WELCOME) {
-                        setNavigationEvent(SetupNavigationEvent.NavigateToWelcomeScreen)
+                subscribeToNavigationState().collect { navigationEvent ->
+                    if (navigationEvent == State.WELCOME) {
+                        setNavigationEvent(event = SetupNavigationEvent.NavigateToWelcomeScreen)
                     }
                 }
             }
@@ -40,12 +40,15 @@ class SetupViewModel @Inject constructor(
     fun confirmSetup(studentIndex: Int) {
         viewModelScope.launch {
             confirmNextStep(studentIndex = studentIndex)
+            updateState { state ->
+                (state as? SetupState.SetupRotation)?.copy(isConfirmed = true) ?: state
+            }
         }
     }
 
     fun rotateScreen(studentIndex: Int) {
         viewModelScope.launch {
-            rotateStudentScreen(studentIndex)
+            rotateStudentScreen(studentIndex = studentIndex)
         }
     }
 }

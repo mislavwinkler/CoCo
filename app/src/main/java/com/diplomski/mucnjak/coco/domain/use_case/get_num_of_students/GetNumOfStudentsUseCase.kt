@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class GetNumOfStudentsUseCase @Inject constructor(
     private val activityRepository: ActiveActivityRepository
-): GetNumOfStudents {
+) : GetNumOfStudents {
 
-    override suspend fun invoke() = activityRepository.getActiveActivity().activeNumOfStudents
+    override suspend fun invoke(): Int = activityRepository.getActiveActivity().activeNumOfStudents
 }

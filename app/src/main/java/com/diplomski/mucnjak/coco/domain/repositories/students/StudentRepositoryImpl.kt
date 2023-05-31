@@ -18,7 +18,8 @@ class StudentRepositoryImpl @Inject constructor(
 
     private val students: MutableMap<Int, Student> = mutableMapOf()
 
-    private val studentUpdatesMutableFlow: MutableSharedFlow<StorageUpdate<Student>> = MutableSharedFlow()
+    private val studentUpdatesMutableFlow: MutableSharedFlow<StorageUpdate<Student>> =
+        MutableSharedFlow()
 
     override val studentUpdatesFlow: Flow<StorageUpdate<Student>> = studentUpdatesMutableFlow
 
@@ -41,7 +42,7 @@ class StudentRepositoryImpl @Inject constructor(
 
     override fun getAllStudents(): List<Student> = students.values.toList()
 
-    override fun getStudent(index: Int) = students[index]
+    override fun getStudent(index: Int): Student? = students[index]
 
     override suspend fun updateStudent(index: Int, student: Student) {
         val oldData = this.students[index]
@@ -64,9 +65,10 @@ class StudentRepositoryImpl @Inject constructor(
         studentAnswers[studentIndex]?.answers?.remove(answer)
     }
 
-    override fun getAllStudentsAnswers() = studentAnswers.values.toList()
+    override fun getAllStudentsAnswers(): List<StudentAnswers> = studentAnswers.values.toList()
 
-    override fun getStudentAnswers(studentIndex: Int) = studentAnswers[studentIndex]?.answers.orEmpty()
+    override fun getStudentAnswers(studentIndex: Int): List<Answer> =
+        studentAnswers[studentIndex]?.answers.orEmpty()
 
     override fun clearAllStudentAnswers() {
         studentAnswers.forEach {

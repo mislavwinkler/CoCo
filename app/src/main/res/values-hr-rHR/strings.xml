@@ -12,4 +12,24 @@
     <string name="topic">Tema:</string>
     <string name="subtopic">Podtema:</string>
     <string name="loading">Učitavanje</string>
+    <string name="hi">Bok,</string>
+    <string name="exclamation_name">%s!</string>
+    <string name="rotate_setup_description">Rotiraj ekran ako ti ne odgovara, te potvrdi klikom na kvačicu.</string>
+    <string name="subtopic_separator">| %s</string>
+    <string name="welcome_activity_description">Unutar sljedećih %d minuta:\n%s.</string>
+    <string name="congratulations">Bravo!</string>
+    <string name="congratulations_wait_for_others">Pričekaj da ostali završe.</string>
+    <string name="go_back_to_solving">Vrati se na zadatak</string>
+    <string name="something_is_wrong">Nešto je krivo!</string>
+    <string name="discussion_description">Imate %s minuta da raspravite rješenja, pa pokušajte ponovno.</string>
+    <string name="discussion_additional_description">U ovom periodu ne možete mjenjati odgovore.</string>
+    <string name="try_again">Pokušaj ponovo!</string>
+    <string name="retry_description">Sad kada ste raspravili, pokušajte prepraviti svoje odgovore.</string>
+    <string name="practice_finished">Vježba je gotova!</string>
+    <string name="finish_description">Idemo vidjeti tvoje rezultate!</string>
+    <string name="solutions">Rješenja</string>
+    <string name="solutions_for_question">"Rješenja za:\n%s"</string>
+    <string name="finish">Završi</string>
+    <string name="congratulations_description">Super ste ovo riješili, samo nastavite tako!Vježba je gotova, pozovite učiteljicu.</string>
+    <string name="return_to_solutions">Vrati se na rješenja</string>
 </resources>

@@ -8,7 +8,7 @@ class AddIncorrectAnswerInfoUseCase @Inject constructor(
     private val answerCheckerRepository: AnswerCheckerRepository
 ) : AddIncorrectAnswerInfo {
 
-    override fun invoke(answers: List<Answer>) = answerCheckerRepository.addIncorrectAnswerInfo(
+    override fun invoke(answers: List<Answer>): List<Answer> = answerCheckerRepository.addIncorrectAnswerInfo(
         answers = answers
     )
 }

@@ -28,7 +28,7 @@ import androidx.compose.ui.text.withStyle
 import com.diplomski.mucnjak.coco.extensions.empty
 
 @Suppress("SpellCheckingInspection")
-const val QWERTZ_LAYOUT = "QWERTZUIOPASDFGHJKLYXCVBNM"
+const val QWERTZ_LAYOUT: String = "QWERTZUIOPASDFGHJKLYXCVBNM"
 
 @Composable
 fun CustomKeyboardManagerScope.CustomKeyboard(onConfirm: () -> Unit = {}) {
@@ -140,7 +140,7 @@ data class CustomKeyboardManagerScope(
     val isKeyboardShown: Boolean = false,
     val onUpdated: (CustomKeyboardManagerScope) -> Unit = {},
 ) {
-    fun update(inputText: String? = null, isKeyboardShown: Boolean? = null) = onUpdated(
+    fun update(inputText: String? = null, isKeyboardShown: Boolean? = null): Unit = onUpdated(
         CustomKeyboardManagerScope(
             inputText ?: this.inputText,
             isKeyboardShown ?: this.isKeyboardShown,

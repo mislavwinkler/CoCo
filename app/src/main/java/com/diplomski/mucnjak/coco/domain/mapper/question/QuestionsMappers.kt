@@ -6,5 +6,5 @@ import com.diplomski.mucnjak.coco.domain.mapper.UiMapper
 
 interface QuestionsMappers {
 
-    interface QuestionMapper: UiMapper<ActiveActivityDomainModel, List<Question>>
+    interface QuestionMapper : UiMapper<ActiveActivityDomainModel, List<Question>>
 }

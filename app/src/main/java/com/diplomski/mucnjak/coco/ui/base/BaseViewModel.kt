@@ -9,13 +9,13 @@ import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<State, NavigationEvent>(initialState: State) : ViewModel() {
 
-    private val uiState =  MutableStateFlow(initialState)
+    private val uiState = MutableStateFlow(initialState)
     val state: StateFlow<State> = uiState
 
-    private val navigationEventMutableFlow =  MutableStateFlow<NavigationEvent?>(null)
+    private val navigationEventMutableFlow = MutableStateFlow<NavigationEvent?>(null)
     val navigationEvent: StateFlow<NavigationEvent?> = navigationEventMutableFlow
 
-    protected fun updateState(update: (previousState: State) -> State) = uiState.update(update)
+    protected fun updateState(update: (previousState: State) -> State): Unit = uiState.update(update)
 
     protected fun setState(update: (previousState: State) -> State) {
         val state = uiState.value
