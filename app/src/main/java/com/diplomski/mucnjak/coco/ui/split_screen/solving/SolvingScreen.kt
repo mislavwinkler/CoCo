@@ -1,6 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.solving
 
-import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.components.SAMSUNG_SM_X200
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -18,9 +18,9 @@ import com.diplomski.mucnjak.coco.R
 import com.diplomski.mucnjak.coco.data.ui.Answer
 import com.diplomski.mucnjak.coco.data.ui.AnswerType
 import com.diplomski.mucnjak.coco.shared.DoNothing
-import com.diplomski.mucnjak.coco.ui.common.*
-import com.diplomski.mucnjak.coco.ui.common.answer_container.AnswerContainer
-import com.diplomski.mucnjak.coco.ui.common.splitscreen.LocalSize
+import com.diplomski.mucnjak.coco.ui.components.*
+import com.diplomski.mucnjak.coco.ui.components.answer_container.AnswerContainer
+import com.diplomski.mucnjak.coco.ui.components.splitscreen.LocalSize
 import com.diplomski.mucnjak.coco.ui.split_screen.LocalStudentIndex
 import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
 import com.diplomski.mucnjak.coco.ui.theme.LocalCustomColor

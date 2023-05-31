@@ -1,6 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.splash
 
-import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.components.SAMSUNG_SM_X200
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.diplomski.mucnjak.coco.R
+import com.diplomski.mucnjak.coco.ui.components.LoadingScreen
 import com.diplomski.mucnjak.coco.ui.main.MainActivity
 import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,48 +52,8 @@ class SplashActivity : ComponentActivity() {
 @Composable
 private fun Content() {
     CoCoTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.surface,
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                AnimatedLogo()
-                Text(
-                    text = "LOADING",
-                    color = MaterialTheme.colors.secondary
-                )
-            }
-        }
+        LoadingScreen()
     }
-}
-
-@Composable
-private fun AnimatedLogo() {
-    val infiniteTransition = rememberInfiniteTransition()
-    val frame by infiniteTransition.animateValue(
-        initialValue = 0,
-        targetValue = 4,
-        typeConverter = Int.VectorConverter,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000),
-            repeatMode = RepeatMode.Restart
-        )
-    )
-    val frames = listOf(
-        R.drawable.ic_logo_loading_1,
-        R.drawable.ic_logo_loading_2,
-        R.drawable.ic_logo_loading_3,
-        R.drawable.ic_logo_loading_4,
-    )
-    Image(
-        modifier = Modifier.fillMaxHeight(fraction = 0.5f),
-        painter = painterResource(id = frames[frame]),
-        contentDescription = null,
-    )
 }
 
 @Composable

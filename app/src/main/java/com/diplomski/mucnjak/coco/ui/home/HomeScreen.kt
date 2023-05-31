@@ -1,23 +1,27 @@
 package com.diplomski.mucnjak.coco.ui.home
 
-import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diplomski.mucnjak.coco.shared.DoNothing
-import com.diplomski.mucnjak.coco.ui.common.OnState
+import com.diplomski.mucnjak.coco.ui.components.*
+import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
+import com.diplomski.mucnjak.coco.ui.theme.Dimens
 import com.diplomski.mucnjak.coco.ui.theme.LocalCustomColor
+import com.diplomski.mucnjak.coco.ui.theme.LocalSpecialTypography
 
 @Composable
 fun HomeScreen(navigateToSplitScreen: () -> Unit) {
@@ -59,138 +63,177 @@ private fun FailedState(
     loadActivity: () -> Unit,
 ) {
     HomeContent {
-        Button(
-            modifier = Modifier
-                .padding(top = 10.667.dp)
-                .height(37.333.dp)
-                .fillMaxWidth(0.3f),
-            onClick = { loadActivity() }
+        Column(
+            modifier = Modifier.align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = "Initialize!")
+            Text(
+                text = "Oh, no!",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.h1,
+                color = MaterialTheme.colors.secondary,
+            )
+            Text(
+                modifier = Modifier.padding(top = Dimens.x3),
+                text = "Something went wrong,\n configuration wasn't receiver!",
+                textAlign = TextAlign.Center,
+                style = LocalSpecialTypography.current.WelcomeHello,
+                color = MaterialTheme.colors.secondary,
+            )
+            CocoButton(
+                modifier = Modifier.padding(top = Dimens.x3),
+                text = "Fetch again!",
+                onClick = loadActivity
+            )
         }
     }
 }
 
 @Composable
 private fun LoadingState() {
-    HomeContent {
-        Button(
-            modifier = Modifier
-                .padding(top = 10.667.dp)
-                .height(37.333.dp)
-                .fillMaxWidth(0.3f),
-            onClick = { DoNothing },
-            enabled = false
-        ) {
-            CircularProgressIndicator()
-        }
-    }
+    LoadingScreen()
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LoadedState(
     state: HomeState.Loaded,
     clearConfiguration: () -> Unit,
     start: () -> Unit,
 ) {
-    HomeContent {
-        Row(
-            modifier = Modifier
-                .padding(top = 10.667.dp)
-                .fillMaxWidth(0.4f),
-        ) {
-            Button(
-                modifier = Modifier
-                    .height(37.333.dp)
-                    .fillMaxWidth(0.75f),
-                onClick = { clearConfiguration() }
+    Box {
+        HomeContent {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(text = "Clear configuration!")
-            }
-            Button(
-                modifier = Modifier
-                    .padding(start = 5.333.dp)
-                    .height(37.333.dp)
-                    .fillMaxWidth(),
-                onClick = { start() }
-            ) {
-                Text(text = "Start!")
+                Text(
+                    text = "Hello!",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.secondary,
+                )
+                Text(
+                    modifier = Modifier.padding(top = Dimens.x3),
+                    text = "Welcome to CoCo application!",
+                    textAlign = TextAlign.Center,
+                    style = LocalSpecialTypography.current.WelcomeHello,
+                    color = MaterialTheme.colors.secondary,
+                )
+                StartButton(
+                    modifier = Modifier.padding(top = Dimens.x3),
+                    text = "Start",
+                    onClick = start
+                )
             }
         }
-        Column {
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = Dimens.x3, bottom = Dimens.x3)
+                .combinedClickable(
+                    onClick = { DoNothing },
+                    onLongClick = { clearConfiguration() }
+                ),
+            horizontalAlignment = Alignment.End
+        ) {
             Text(
-                text = state.topic,
-                style = MaterialTheme.typography.h2,
-                color = Color.White,
+                text = "Current configuration:",
+                style = MaterialTheme.typography.caption,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.secondary,
             )
-            Text(
-                text = state.subTopic,
-                style = MaterialTheme.typography.h3,
-                color = Color.White,
-            )
-            Text(
-                text = "This device has configuration for ${state.numOfStudents} students."
-            )
+            KeyValueText(key = "Group size: ", value = state.numOfStudents.toString())
+            KeyValueText(key = "Topic: ", value = state.topic)
+            KeyValueText(key = "Subtopic: ", value = state.subTopic)
         }
     }
 }
 
 @Composable
+private fun KeyValueText(key: String, value: String) {
+    Text(
+        text = buildAnnotatedString {
+            append(key)
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append(value)
+            }
+        },
+        style = MaterialTheme.typography.caption,
+        color = MaterialTheme.colors.secondary,
+    )
+}
+
+@Composable
 private fun HomeContent(
-    content: @Composable () -> Unit,
+    isError: Boolean = false,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
         modifier = Modifier
             .background(color = LocalCustomColor.current.neutralBackground)
             .fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .background(color = LocalCustomColor.current.neutralBackground)
+                .fillMaxSize()
+                .padding(top = Dimens.x3, bottom = Dimens.x3),
+            verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Co|Co",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h1,
-                color = Color.White,
-            )
-            content()
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Logo(modifier = Modifier.padding(start = Dimens.x3))
+                ReverseBranch()
+            }
+            if (isError) {
+                SadBirdOnBranch()
+            } else {
+                BirdOnBranch()
+            }
         }
+        content()
     }
 }
 
 @Preview(showSystemUi = true, device = SAMSUNG_SM_X200)
 @Composable
-private fun PreviewInitial() {
-    HandleState(
-        state = HomeState.Initial,
-        loadActivity = { DoNothing },
-        clearConfiguration = { DoNothing },
-        start = { DoNothing }
-    )
+private fun PreviewLoading() {
+    CoCoTheme {
+        HandleState(
+            state = HomeState.Loading,
+            loadActivity = { DoNothing },
+            clearConfiguration = { DoNothing },
+            start = { DoNothing }
+        )
+    }
 }
 
 @Preview(showSystemUi = true, device = SAMSUNG_SM_X200)
 @Composable
-private fun PreviewLoading() {
-    HandleState(
-        state = HomeState.Loading,
-        loadActivity = { DoNothing },
-        clearConfiguration = { DoNothing },
-        start = { DoNothing }
-    )
+private fun PreviewFailed() {
+    CoCoTheme {
+        HandleState(
+            state = HomeState.Failed,
+            loadActivity = { DoNothing },
+            clearConfiguration = { DoNothing },
+            start = { DoNothing }
+        )
+    }
 }
 
 @Preview(showSystemUi = true, device = SAMSUNG_SM_X200)
 @Composable
 private fun PreviewLoaded() {
-    HandleState(
-        state = HomeState.Loaded(2, "Topic title", "Subtopic title"),
-        loadActivity = { DoNothing },
-        clearConfiguration = { DoNothing },
-        start = { DoNothing }
-    )
+    CoCoTheme {
+        HandleState(
+            state = HomeState.Loaded(2, "Topic title", "Subtopic title"),
+            loadActivity = { DoNothing },
+            clearConfiguration = { DoNothing },
+            start = { DoNothing }
+        )
+    }
 }

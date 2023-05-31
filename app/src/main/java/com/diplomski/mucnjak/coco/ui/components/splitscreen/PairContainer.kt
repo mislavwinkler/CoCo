@@ -1,4 +1,4 @@
-package com.diplomski.mucnjak.coco.ui.common.splitscreen
+package com.diplomski.mucnjak.coco.ui.components.splitscreen
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope

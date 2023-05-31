@@ -1,4 +1,4 @@
-package com.diplomski.mucnjak.coco.ui.common.splitscreen
+package com.diplomski.mucnjak.coco.ui.components.splitscreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*

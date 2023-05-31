@@ -1,7 +1,10 @@
+@file:Suppress("DEPRECATION")
+
 package com.diplomski.mucnjak.coco.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -13,7 +16,7 @@ private val CocoFontFamily = FontFamily(
     Font(resId = R.font.comfortaa_regular, weight = FontWeight.Normal),
     Font(resId = R.font.comfortaa_medium, weight = FontWeight.Medium),
     Font(resId = R.font.comfortaa_bold, weight = FontWeight.Bold),
-    Font(resId = R.font.comfortaa_semibold, weight = FontWeight.SemiBold),
+    Font(resId = R.font.comfortaa_semibold, weight = FontWeight.SemiBold)
 )
 
 // Hrv: Tekuci tekst
@@ -65,7 +68,7 @@ private val LargeNumbers = TextStyle(
  */
 private val ConfirmButton = TextStyle(
     fontFamily = CocoFontFamily,
-    fontWeight = FontWeight.SemiBold,
+    fontWeight = FontWeight.Normal,
     fontSize = 24.sp,
     letterSpacing = 3.sp,
 )
@@ -113,10 +116,12 @@ private val caption = TextStyle(
 /**
  * @param WelcomeName size is 55
  * @param WelcomeHello size is 40
+ * @param StartButton size is 48
  */
 data class SpecialTypography(
     val WelcomeName: TextStyle,
     val WelcomeHello: TextStyle,
+    val StartButton: TextStyle,
 )
 
 val cocoSpecialTypography = SpecialTypography(
@@ -131,7 +136,13 @@ val cocoSpecialTypography = SpecialTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 27.sp,
         letterSpacing = 0.sp
-    )
+    ),
+    StartButton = TextStyle(
+        fontFamily = CocoFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 32.sp,
+        letterSpacing = 0.sp
+    ),
 )
 
 val LocalSpecialTypography = compositionLocalOf { cocoSpecialTypography }

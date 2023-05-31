@@ -7,10 +7,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.diplomski.mucnjak.coco.ui.common.ConfirmButton
-import com.diplomski.mucnjak.coco.ui.common.OnNavigationEvent
-import com.diplomski.mucnjak.coco.ui.common.OnState
-import com.diplomski.mucnjak.coco.ui.common.RotateButton
+import com.diplomski.mucnjak.coco.ui.components.ConfirmButton
+import com.diplomski.mucnjak.coco.ui.components.OnNavigationEvent
+import com.diplomski.mucnjak.coco.ui.components.OnState
+import com.diplomski.mucnjak.coco.ui.components.RotateButton
 import com.diplomski.mucnjak.coco.ui.split_screen.LocalStudentIndex
 
 @Composable

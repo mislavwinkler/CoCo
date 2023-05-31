@@ -1,6 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.studentinput
 
-import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.components.SAMSUNG_SM_X200
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.diplomski.mucnjak.coco.ui.common.*
+import com.diplomski.mucnjak.coco.ui.components.*
 import com.diplomski.mucnjak.coco.ui.split_screen.LocalStudentIndex
 
 @Composable

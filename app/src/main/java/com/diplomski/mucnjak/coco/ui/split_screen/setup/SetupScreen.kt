@@ -11,13 +11,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diplomski.mucnjak.coco.shared.DoNothing
-import com.diplomski.mucnjak.coco.ui.common.ConfirmButton
-import com.diplomski.mucnjak.coco.ui.common.OnNavigationEvent
-import com.diplomski.mucnjak.coco.ui.common.OnState
-import com.diplomski.mucnjak.coco.ui.common.RotateButton
+import com.diplomski.mucnjak.coco.ui.components.ConfirmButton
+import com.diplomski.mucnjak.coco.ui.components.OnNavigationEvent
+import com.diplomski.mucnjak.coco.ui.components.OnState
+import com.diplomski.mucnjak.coco.ui.components.RotateButton
 import com.diplomski.mucnjak.coco.ui.split_screen.LocalStudentIndex
 import com.diplomski.mucnjak.coco.ui.theme.LocalSpecialTypography
-import com.diplomski.mucnjak.coco.ui.theme.Spacing
+import com.diplomski.mucnjak.coco.ui.theme.Dimens
 
 @Composable
 fun SetupScreen(navigateToWelcome: () -> Unit) {
@@ -62,7 +62,7 @@ private fun SetupRotation(
             style = LocalSpecialTypography.current.WelcomeHello,
         )
         Text(
-            modifier = Modifier.padding(bottom = Spacing.x3_75),
+            modifier = Modifier.padding(bottom = Dimens.x3_75),
             text = "$studentName!",
             style = LocalSpecialTypography.current.WelcomeName,
         )

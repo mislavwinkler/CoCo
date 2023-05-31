@@ -243,6 +243,7 @@ fun StudentCoCoTheme(studentIndex: Int, content: @Composable () -> Unit) {
 object CustomColorPalette {
     val hyperlink = Teal
     val neutralBackground = VeryLightPurple
+    val buttonShadow = DarkPink
 }
 
 val LocalCustomColor = compositionLocalOf { CustomColorPalette }

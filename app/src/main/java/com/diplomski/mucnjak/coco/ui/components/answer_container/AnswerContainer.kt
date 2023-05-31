@@ -1,6 +1,6 @@
-package com.diplomski.mucnjak.coco.ui.common.answer_container
+package com.diplomski.mucnjak.coco.ui.components.answer_container
 
-import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.components.SAMSUNG_SM_X200
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

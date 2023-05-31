@@ -1,4 +1,4 @@
-package com.diplomski.mucnjak.coco.ui.common
+package com.diplomski.mucnjak.coco.ui.components
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.clickable

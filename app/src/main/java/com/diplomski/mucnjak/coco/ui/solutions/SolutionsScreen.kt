@@ -10,9 +10,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diplomski.mucnjak.coco.data.ui.Question
 import com.diplomski.mucnjak.coco.shared.DoNothing
-import com.diplomski.mucnjak.coco.ui.common.OnNavigationEvent
-import com.diplomski.mucnjak.coco.ui.common.OnState
-import com.diplomski.mucnjak.coco.ui.common.answer_container.AnswerContainer
+import com.diplomski.mucnjak.coco.ui.components.OnNavigationEvent
+import com.diplomski.mucnjak.coco.ui.components.OnState
+import com.diplomski.mucnjak.coco.ui.components.answer_container.AnswerContainer
 
 @Composable
 fun SolutionsScreen(navigateToStart: () -> Unit) {

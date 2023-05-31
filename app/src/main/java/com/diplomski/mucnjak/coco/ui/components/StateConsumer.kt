@@ -1,4 +1,4 @@
-package com.diplomski.mucnjak.coco.ui.common
+package com.diplomski.mucnjak.coco.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

@@ -1,6 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.split_screen
 
-import com.diplomski.mucnjak.coco.ui.common.SAMSUNG_SM_X200
+import com.diplomski.mucnjak.coco.ui.components.SAMSUNG_SM_X200
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,8 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diplomski.mucnjak.coco.shared.DoNothing
-import com.diplomski.mucnjak.coco.ui.common.*
-import com.diplomski.mucnjak.coco.ui.common.splitscreen.SplitScreenContainer
+import com.diplomski.mucnjak.coco.ui.components.*
+import com.diplomski.mucnjak.coco.ui.components.splitscreen.SplitScreenContainer
 import com.diplomski.mucnjak.coco.ui.theme.StudentCoCoTheme
 
 @Composable
