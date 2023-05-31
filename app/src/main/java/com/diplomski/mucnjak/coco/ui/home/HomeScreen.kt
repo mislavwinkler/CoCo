@@ -76,14 +76,13 @@ private fun FailedState(
                 color = MaterialTheme.colors.secondary,
             )
             Text(
-                modifier = Modifier.padding(top = Dimens.x3),
                 text = stringResource(id = R.string.config_something_went_wrong),
                 textAlign = TextAlign.Center,
                 style = LocalSpecialTypography.current.WelcomeHello,
                 color = MaterialTheme.colors.secondary,
             )
             CocoButton(
-                modifier = Modifier.padding(top = Dimens.x3),
+                modifier = Modifier.padding(top = Dimens.x3, bottom = Dimens.x8),
                 text = stringResource(R.string.fetch_again),
                 onClick = loadActivity
             )
@@ -122,7 +121,7 @@ private fun LoadedState(
                     color = MaterialTheme.colors.secondary,
                 )
                 StartButton(
-                    modifier = Modifier.padding(top = Dimens.x2, bottom = Dimens.x8),
+                    modifier = Modifier.padding(top = Dimens.x3, bottom = Dimens.x8),
                     text = stringResource(R.string.start),
                     onClick = start
                 )

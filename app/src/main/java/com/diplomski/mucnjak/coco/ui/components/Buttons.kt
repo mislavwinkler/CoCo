@@ -76,7 +76,8 @@ fun CocoButton(
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.error
         ),
-        contentPadding = PaddingValues(horizontal = Dimens.x5, vertical = Dimens.x1)
+        contentPadding = PaddingValues(horizontal = Dimens.x5, vertical = Dimens.x1),
+        elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
     ) {
         Text(
             text = text.toUpperCase(Locale.current),
@@ -103,7 +104,8 @@ fun StartButton(
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.error
         ),
-        contentPadding = PaddingValues(horizontal = Dimens.x5, vertical = Dimens.x1)
+        contentPadding = PaddingValues(horizontal = Dimens.x5, vertical = Dimens.x1),
+        elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
