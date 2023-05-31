@@ -117,11 +117,13 @@ private val caption = TextStyle(
  * @param WelcomeName size is 55
  * @param WelcomeHello size is 40
  * @param StartButton size is 48
+ * @param Loading size is 48
  */
 data class SpecialTypography(
     val WelcomeName: TextStyle,
     val WelcomeHello: TextStyle,
     val StartButton: TextStyle,
+    val Loading: TextStyle,
 )
 
 val cocoSpecialTypography = SpecialTypography(
@@ -141,7 +143,13 @@ val cocoSpecialTypography = SpecialTypography(
         fontFamily = CocoFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 32.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 8.sp
+    ),
+    Loading = TextStyle(
+        fontFamily = CocoFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 32.sp,
+        letterSpacing = 8 .sp
     ),
 )
 

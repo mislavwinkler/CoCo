@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">CoCo</string>
+    <string name="oh_no">Oh, no!</string>
+    <string name="config_something_went_wrong">Something went wrong,\nconfiguration wasn\'t receiver!</string>
+    <string name="fetch_again">Fetch again</string>
+    <string name="hello">Hello!</string>
+    <string name="welcome">Welcome to CoCo application!</string>
+    <string name="start">Start</string>
+    <string name="current_configuration">Current configuration:</string>
+    <string name="group_size">Group size:</string>
+    <string name="topic">Topic:</string>
+    <string name="subtopic">Subtopic:</string>
+    <string name="loading">Loading</string>
 </resources>

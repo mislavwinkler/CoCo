@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CoCo</string>
+    <string name="oh_no">Oh, ne!</string>
+    <string name="config_something_went_wrong">Nešto je pošlo po krivu,\npostavke nisu dohvaćene! </string>
+    <string name="fetch_again">Ponovo dohvati</string>
+    <string name="hello">Bok!</string>
+    <string name="welcome">"Dobrodošli u CoCo aplikaciju! "</string>
+    <string name="start">Pokreni</string>
+    <string name="current_configuration">Trenutne postavke:</string>
+    <string name="group_size">Veličina grupe:</string>
+    <string name="topic">Tema:</string>
+    <string name="subtopic">Podtema:</string>
+    <string name="loading">Učitavanje</string>
+</resources>

@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.diplomski.mucnjak.coco.R
 import com.diplomski.mucnjak.coco.shared.DoNothing
 import com.diplomski.mucnjak.coco.ui.components.*
 import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
@@ -68,21 +70,21 @@ private fun FailedState(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Oh, no!",
+                text = stringResource(R.string.oh_no),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h1,
                 color = MaterialTheme.colors.secondary,
             )
             Text(
                 modifier = Modifier.padding(top = Dimens.x3),
-                text = "Something went wrong,\n configuration wasn't receiver!",
+                text = stringResource(id = R.string.config_something_went_wrong),
                 textAlign = TextAlign.Center,
                 style = LocalSpecialTypography.current.WelcomeHello,
                 color = MaterialTheme.colors.secondary,
             )
             CocoButton(
                 modifier = Modifier.padding(top = Dimens.x3),
-                text = "Fetch again!",
+                text = stringResource(R.string.fetch_again),
                 onClick = loadActivity
             )
         }
@@ -108,21 +110,20 @@ private fun LoadedState(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "Hello!",
+                    text = stringResource(R.string.hello),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.h1,
                     color = MaterialTheme.colors.secondary,
                 )
                 Text(
-                    modifier = Modifier.padding(top = Dimens.x3),
-                    text = "Welcome to CoCo application!",
+                    text = stringResource(R.string.welcome),
                     textAlign = TextAlign.Center,
                     style = LocalSpecialTypography.current.WelcomeHello,
                     color = MaterialTheme.colors.secondary,
                 )
                 StartButton(
-                    modifier = Modifier.padding(top = Dimens.x3),
-                    text = "Start",
+                    modifier = Modifier.padding(top = Dimens.x2, bottom = Dimens.x8),
+                    text = stringResource(R.string.start),
                     onClick = start
                 )
             }
@@ -138,14 +139,14 @@ private fun LoadedState(
             horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = "Current configuration:",
+                text = stringResource(R.string.current_configuration),
                 style = MaterialTheme.typography.caption,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colors.secondary,
             )
-            KeyValueText(key = "Group size: ", value = state.numOfStudents.toString())
-            KeyValueText(key = "Topic: ", value = state.topic)
-            KeyValueText(key = "Subtopic: ", value = state.subTopic)
+            KeyValueText(key = stringResource(R.string.group_size), value = state.numOfStudents.toString())
+            KeyValueText(key = stringResource(R.string.topic), value = state.topic)
+            KeyValueText(key = stringResource(R.string.subtopic), value = state.subTopic)
         }
     }
 }
@@ -154,7 +155,7 @@ private fun LoadedState(
 private fun KeyValueText(key: String, value: String) {
     Text(
         text = buildAnnotatedString {
-            append(key)
+            append("$key ")
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                 append(value)
             }

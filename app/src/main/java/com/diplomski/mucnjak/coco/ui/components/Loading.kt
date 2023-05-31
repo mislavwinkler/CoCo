@@ -2,10 +2,7 @@ package com.diplomski.mucnjak.coco.ui.components
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -14,7 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toUpperCase
 import com.diplomski.mucnjak.coco.R
+import com.diplomski.mucnjak.coco.ui.theme.Dimens
+import com.diplomski.mucnjak.coco.ui.theme.LocalSpecialTypography
 
 @Composable
 fun LoadingScreen(
@@ -30,8 +32,10 @@ fun LoadingScreen(
         ) {
             AnimatedLogo()
             Text(
-                text = "LOADING",
-                color = MaterialTheme.colors.secondary
+                modifier = Modifier.padding(top = Dimens.x6),
+                text = stringResource(R.string.loading).toUpperCase(Locale.current),
+                style = LocalSpecialTypography.current.Loading,
+                color = MaterialTheme.colors.secondary,
             )
         }
     }
