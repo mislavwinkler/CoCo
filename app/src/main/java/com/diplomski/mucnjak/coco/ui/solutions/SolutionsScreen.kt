@@ -124,7 +124,7 @@ private fun Solutions(
                             )
                             AnswerContainer(
                                 modifier = Modifier
-                                    .fillMaxWidth()
+                                    .fillMaxSize()
                                     .padding(top = Dimens.x1),
                                 answers = answers,
                                 onAnswerClick = { DoNothing },

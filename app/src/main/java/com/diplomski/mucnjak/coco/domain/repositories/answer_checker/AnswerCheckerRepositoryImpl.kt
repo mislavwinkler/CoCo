@@ -5,6 +5,7 @@ import com.diplomski.mucnjak.coco.data.ui.Question
 import com.diplomski.mucnjak.coco.domain.repositories.students.StudentRepository
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.roundToInt
 
 @Singleton
 class AnswerCheckerRepositoryImpl @Inject constructor(
@@ -35,4 +36,14 @@ class AnswerCheckerRepositoryImpl @Inject constructor(
                 answer
             }
         }
+
+    override fun getStudentAccuracy(studentIndex: Int): Int {
+        val studentAnswers = studentRepository.getAllStudentsAnswers()
+            .first { (index, _, _) -> index == studentIndex }
+        val numberOfCorrectAnswers = studentAnswers.question.answers.size
+        val numOfStudentCorrectAnswers =
+            studentAnswers.answers.count { answer -> studentAnswers.question.answers.contains(answer) }
+        val numOfStudentIncorrectAnswers = studentAnswers.answers.size - numOfStudentCorrectAnswers
+        return ((numOfStudentCorrectAnswers.toFloat() / (numberOfCorrectAnswers + numOfStudentIncorrectAnswers)) * 100).roundToInt()
+    }
 }

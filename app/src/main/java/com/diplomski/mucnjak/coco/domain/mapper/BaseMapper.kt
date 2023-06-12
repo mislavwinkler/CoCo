@@ -8,3 +8,8 @@ interface DomainMapper<NetworkModel, DomainModel> {
 
     fun mapToDomainModel(networkModel: NetworkModel): DomainModel
 }
+
+interface NetworkMapper<DomainModel, NetworkModel> {
+
+    fun mapToNetworkModel(domainModel: DomainModel): NetworkModel
+}

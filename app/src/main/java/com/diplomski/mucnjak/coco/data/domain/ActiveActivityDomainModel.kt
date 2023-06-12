@@ -15,4 +15,5 @@ data class ActiveActivityDomainModel(
     val solvingTime: Int = 0,
     val topic: String,
     val activeNumOfStudents: Int = 0,
+    val groupIndex: Int = 0,
 )

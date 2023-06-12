@@ -41,6 +41,9 @@ class ConsumeActiveActivityConfigInteractorImpl @Inject constructor(
         val activeNumOfStudents =
             activeActivityDomainModel.numOfStudents[config.indexOf(uuid.toString())]
 
-        return@withContext activeActivityDomainModel.copy(activeNumOfStudents = activeNumOfStudents)
+        return@withContext activeActivityDomainModel.copy(
+            activeNumOfStudents = activeNumOfStudents,
+            groupIndex = config.indexOf(uuid.toString())
+        )
     }
 }

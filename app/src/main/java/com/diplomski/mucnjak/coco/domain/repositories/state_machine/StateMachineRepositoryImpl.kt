@@ -1,8 +1,10 @@
 package com.diplomski.mucnjak.coco.domain.repositories.state_machine
 
 import com.diplomski.mucnjak.coco.domain.repositories.active_activity.ActiveActivityRepository
+import com.diplomski.mucnjak.coco.domain.repositories.analytics.AnalyticsRepository
 import com.diplomski.mucnjak.coco.domain.repositories.answer_checker.AnswerCheckerRepository
 import com.diplomski.mucnjak.coco.domain.repositories.clock.ClockRepository
+import com.diplomski.mucnjak.coco.domain.repositories.iteration.IterationRepository
 import com.diplomski.mucnjak.coco.shared.dispatcher.Dispatcher
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
@@ -19,6 +21,8 @@ class StateMachineRepositoryImpl @Inject constructor(
     private val clockRepository: ClockRepository,
     private val dispatcher: Dispatcher,
     private val answerCheckerRepository: AnswerCheckerRepository,
+    private val analyticsRepository: AnalyticsRepository,
+    private val iterationRepository: IterationRepository,
 ) : StateMachineRepository {
 
     private var state: State = State.NAME_INPUT
@@ -31,14 +35,12 @@ class StateMachineRepositoryImpl @Inject constructor(
     )
     override val navigate: Flow<State> = stateFlow
 
-    private var iteration = -1
-
     private val mutex = Mutex()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun reset() {
         state = State.NAME_INPUT
-        iteration = -1
+        iterationRepository.reset()
         stateFlow.resetReplayCache()
         studentConfirmation.clear()
         repeat(activeActivityRepository.getActiveActivity().activeNumOfStudents) {
@@ -76,17 +78,22 @@ class StateMachineRepositoryImpl @Inject constructor(
         studentConfirmation.replaceAll { _, _ -> false }
         clockRepository.cancelTimer()
         state = when (state) {
-            State.NAME_INPUT -> State.SETUP
+            State.NAME_INPUT -> startSetupStep()
             State.SETUP -> State.WELCOME
             State.WELCOME -> startSolvingStep()
             State.SOLVING -> determineStepAfterSolving()
             State.INCORRECT_SOLUTION_NOTE -> startDiscussionStep()
-            State.DISCUSSION -> State.RETRY_NOTE
+            State.DISCUSSION -> startRetryNoteStep()
             State.RETRY_NOTE -> startSolvingStep()
             State.FINISH_NOTE -> State.SOLUTIONS
             State.SOLUTIONS -> State.WELCOME
         }
         stateFlow.emit(state)
+    }
+
+    private fun startSetupStep(): State {
+        analyticsRepository.init()
+        return State.SETUP
     }
 
     private suspend fun startSolvingStep(): State {
@@ -99,30 +106,42 @@ class StateMachineRepositoryImpl @Inject constructor(
         return State.DISCUSSION
     }
 
+    private fun startRetryNoteStep(): State {
+        analyticsRepository.storeDiscussionTime()
+        return State.RETRY_NOTE
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
     private suspend fun startFinishNote(): State {
-        clockRepository.startClock(4) { nextStep() }
+        GlobalScope.launch {
+            analyticsRepository.postAnalytics()
+            clockRepository.startClock(4) { nextStep() }
+        }
         return State.FINISH_NOTE
     }
 
-    private suspend fun determineStepAfterSolving() =
-        if (answerCheckerRepository.checkAnswers() || !hasNextStep()) {
+    private suspend fun determineStepAfterSolving(): State {
+        analyticsRepository.storeResolutionTimeout()
+        analyticsRepository.calculateAndStoreAccuracies()
+        return if (answerCheckerRepository.checkAnswers() || !hasNextStep()) {
             startFinishNote()
         } else {
             State.INCORRECT_SOLUTION_NOTE
         }
+    }
 
     private suspend fun initStepTimer(state: State) {
         val activity = activeActivityRepository.getActiveActivity()
-        val time = if (state == State.SOLVING && iteration == -1) {
+        val time = if (state == State.SOLVING && iterationRepository.getCurrentIteration() == -1) {
             val time = activity.solvingTime
-            iteration = 0
+            iterationRepository.setCurrentIteration(0)
             time
-        } else if (state == State.SOLVING && iteration >= 0) {
-            val time = activity.correctionTimes[iteration]
-            iteration++
+        } else if (state == State.SOLVING && iterationRepository.getCurrentIteration() >= 0) {
+            val time = activity.correctionTimes[iterationRepository.getCurrentIteration()]
+            iterationRepository.incrementCurrentIteration()
             time
         } else if (state == State.DISCUSSION) {
-            activity.discussionTimes[iteration]
+            activity.discussionTimes[iterationRepository.getCurrentIteration()]
         } else {
             throw IllegalStateException()
         }
@@ -134,7 +153,7 @@ class StateMachineRepositoryImpl @Inject constructor(
         if (state == State.WELCOME) {
             activeActivityRepository.getActiveActivity().solvingTime
         } else if (state == State.INCORRECT_SOLUTION_NOTE && hasNextStep()) {
-            activeActivityRepository.getActiveActivity().discussionTimes[iteration]
+            activeActivityRepository.getActiveActivity().discussionTimes[iterationRepository.getCurrentIteration()]
         } else {
             throw IllegalStateException()
         }
@@ -142,6 +161,6 @@ class StateMachineRepositoryImpl @Inject constructor(
 
     private suspend fun hasNextStep(): Boolean {
         val activity = activeActivityRepository.getActiveActivity()
-        return activity.discussionTimes.size > iteration
+        return activity.discussionTimes.size > iterationRepository.getCurrentIteration()
     }
 }

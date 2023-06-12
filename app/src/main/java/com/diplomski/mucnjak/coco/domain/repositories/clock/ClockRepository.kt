@@ -9,4 +9,5 @@ interface ClockRepository {
 
     val timerFlow: Flow<Int>
     fun cancelTimer()
+    fun getElapsedTime(): Int
 }

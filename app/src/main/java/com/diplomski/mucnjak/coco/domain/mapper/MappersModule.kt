@@ -4,6 +4,8 @@ import com.diplomski.mucnjak.coco.domain.mapper.active_activity.ActiveActivityDo
 import com.diplomski.mucnjak.coco.domain.mapper.active_activity.ActiveActivityMappers
 import com.diplomski.mucnjak.coco.domain.mapper.activity.ActivityMapper
 import com.diplomski.mucnjak.coco.domain.mapper.activity.ActivityMappers
+import com.diplomski.mucnjak.coco.domain.mapper.analytics.AnalyticsMappers
+import com.diplomski.mucnjak.coco.domain.mapper.analytics.AnalyticsNetworkMapper
 import com.diplomski.mucnjak.coco.domain.mapper.answer.AnswerMappers
 import com.diplomski.mucnjak.coco.domain.mapper.answer.AnswersMapper
 import com.diplomski.mucnjak.coco.domain.mapper.question.QuestionsMapper
@@ -30,4 +32,7 @@ interface MappersModule {
 
     @Binds
     fun bindAnswerMapper(mapper: AnswersMapper): AnswerMappers.AnswersMapper
+
+    @Binds
+    fun bindAnalyticsMapper(mapper: AnalyticsNetworkMapper): AnalyticsMappers.AnalyticsNetworkMapper
 }

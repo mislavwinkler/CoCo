@@ -12,6 +12,7 @@ class ClockRepositoryImpl @Inject constructor(
 ) : ClockRepository {
 
     private var timer = 0
+    private var time = 0
 
     private var currentTimerFLow: MutableSharedFlow<Int> = MutableSharedFlow()
 
@@ -25,7 +26,9 @@ class ClockRepositoryImpl @Inject constructor(
         time: Int,
         onTimeout: suspend () -> Unit
     ): SharedFlow<Int> = withContext(dispatcher.io) {
+        this@ClockRepositoryImpl.time = time
         timer = time
+        job?.cancel()
         job = flow<Unit> {
             // Delay one second for smoother flow
             delay(1000)
@@ -44,4 +47,6 @@ class ClockRepositoryImpl @Inject constructor(
         job?.cancel()
         job = null
     }
+
+    override fun getElapsedTime(): Int = time - timer
 }

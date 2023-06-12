@@ -4,6 +4,7 @@ import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
 import com.diplomski.mucnjak.coco.data.ui.Answer
 import com.diplomski.mucnjak.coco.data.ui.Question
+import com.diplomski.mucnjak.coco.domain.repositories.analytics.AnalyticsRepository
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.add_answer.AddAnswer
 import com.diplomski.mucnjak.coco.domain.use_case.remove_answer.RemoveAnswer
@@ -36,6 +37,7 @@ class SolvingViewModel @Inject constructor(
     private val getStudentAnswers: GetStudentAnswers,
     private val confirmNextStep: ConfirmNextStep,
     private val revokeNextStepConfirmation: RevokeNextStepConfirmation,
+    private val analyticsRepository: AnalyticsRepository,
 ) : BaseViewModel<SolvingState, SolvingNavigationEvent>(SolvingState.Initial) {
 
     private var question: Question? = null
@@ -122,6 +124,7 @@ class SolvingViewModel @Inject constructor(
     }
 
     fun confirmTaskSolved(studentIndex: Int) {
+        analyticsRepository.storeResolutionChangeTime(studentIndex)
         viewModelScope.launch {
             confirmNextStep(studentIndex)
         }
@@ -136,6 +139,7 @@ class SolvingViewModel @Inject constructor(
     }
 
     fun returnToSolving(studentIndex: Int) {
+        analyticsRepository.storeResolutionChangeTime(studentIndex)
         viewModelScope.launch {
             revokeNextStepConfirmation(studentIndex)
         }
