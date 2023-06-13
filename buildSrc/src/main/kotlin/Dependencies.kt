@@ -60,6 +60,7 @@ object Dependencies {
         const val firebaseBom: String = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
         const val firebaseFirestore: String = "com.google.firebase:firebase-firestore-ktx"
         const val firebaseStorage: String = "com.google.firebase:firebase-storage-ktx"
+        const val firebaseAnalytics: String = "com.google.firebase:firebase-analytics-ktx"
     }
 
     object Kotlinx : DependencyGrouping<Kotlinx> {

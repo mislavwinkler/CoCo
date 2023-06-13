@@ -2,6 +2,7 @@ package com.diplomski.mucnjak.coco.ui.split_screen.solving
 
 import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.data.ui.Answer
 import com.diplomski.mucnjak.coco.data.ui.Question
 import com.diplomski.mucnjak.coco.domain.repositories.analytics.AnalyticsRepository
@@ -38,6 +39,7 @@ class SolvingViewModel @Inject constructor(
     private val confirmNextStep: ConfirmNextStep,
     private val revokeNextStepConfirmation: RevokeNextStepConfirmation,
     private val analyticsRepository: AnalyticsRepository,
+    private val analytics: Analytics,
 ) : BaseViewModel<SolvingState, SolvingNavigationEvent>(SolvingState.Initial) {
 
     private var question: Question? = null
@@ -89,6 +91,7 @@ class SolvingViewModel @Inject constructor(
     }
 
     fun rotateScreen(index: Int) {
+        analytics.sendStudentRotation(index, "Solving")
         viewModelScope.launch {
             rotateStudentScreen(index)
         }
@@ -96,6 +99,7 @@ class SolvingViewModel @Inject constructor(
 
     fun selectAnswer(studentIndex: Int, answer: Answer) {
         if (answers.any { it.value == answer.value }) {
+            analytics.sendAnswerSelected(studentIndex = studentIndex, answer = answer)
             answers.remove(answer)
             selectedAnswers.add(answer)
             addAnswer(
@@ -103,6 +107,7 @@ class SolvingViewModel @Inject constructor(
                 answer = answer
             )
         } else {
+            analytics.sendAnswerUnselected(studentIndex = studentIndex, answer = answer)
             answers.add(answer)
             selectedAnswers.remove(answer)
             removeAnswer(
@@ -124,6 +129,7 @@ class SolvingViewModel @Inject constructor(
     }
 
     fun confirmTaskSolved(studentIndex: Int) {
+        analytics.sendStudentReady(studentIndex, "Solving")
         analyticsRepository.storeResolutionChangeTime(studentIndex)
         viewModelScope.launch {
             confirmNextStep(studentIndex)
@@ -139,6 +145,7 @@ class SolvingViewModel @Inject constructor(
     }
 
     fun returnToSolving(studentIndex: Int) {
+        analytics.sendStudentUnready(studentIndex, "Solving")
         analyticsRepository.storeResolutionChangeTime(studentIndex)
         viewModelScope.launch {
             revokeNextStepConfirmation(studentIndex)

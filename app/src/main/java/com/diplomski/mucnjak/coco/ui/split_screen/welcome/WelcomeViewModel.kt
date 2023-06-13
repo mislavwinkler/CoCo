@@ -2,6 +2,7 @@ package com.diplomski.mucnjak.coco.ui.split_screen.welcome
 
 import androidx.lifecycle.viewModelScope
 import com.diplomski.mucnjak.coco.R
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.domain.get_string.GetString
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
@@ -27,7 +28,8 @@ class WelcomeViewModel @Inject constructor(
     private val confirmNextStep: ConfirmNextStep,
     private val subscribeToNavigationState: SubscribeToNavigationState,
     private val getString: GetString,
-    private val getNextTime: GetNextTime
+    private val getNextTime: GetNextTime,
+    private val analytics: Analytics,
 ) : BaseViewModel<WelcomeState, NavigateToSolving>(WelcomeState.Initial) {
 
     init {
@@ -43,12 +45,14 @@ class WelcomeViewModel @Inject constructor(
     }
 
     fun rotateScreen(studentIndex: Int) {
+        analytics.sendStudentRotation(studentIndex, "Welcome")
         viewModelScope.launch {
             rotateStudentScreen(studentIndex = studentIndex)
         }
     }
 
     fun onConfirmActivityPreview(studentIndex: Int) {
+        analytics.sendStudentReady(studentIndex, "Welcome")
         viewModelScope.launch {
             confirmNextStep(studentIndex)
             updateState { state ->

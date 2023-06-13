@@ -46,4 +46,33 @@ class AnswerCheckerRepositoryImpl @Inject constructor(
         val numOfStudentIncorrectAnswers = studentAnswers.answers.size - numOfStudentCorrectAnswers
         return ((numOfStudentCorrectAnswers.toFloat() / (numberOfCorrectAnswers + numOfStudentIncorrectAnswers)) * 100).roundToInt()
     }
+
+    override fun getStudentCorrectAnswers(studentIndex: Int): List<Answer> {
+        val studentAnswers = studentRepository.getAllStudentsAnswers()
+            .first { (index, _, _) -> index == studentIndex }
+        return studentAnswers.answers.filter { answer ->
+            studentAnswers.question.answers.contains(
+                answer
+            )
+        }.map { it }
+    }
+
+    override fun getStudentIncorrectAnswers(studentIndex: Int): List<Answer> {
+        val studentAnswers = studentRepository.getAllStudentsAnswers()
+            .first { (index, _, _) -> index == studentIndex }
+        return studentAnswers.answers.filter { answer ->
+            !studentAnswers.question.answers.contains(
+                answer
+            )
+        }.map { it }
+    }
+
+    override fun getStudentQuestionCorrectAnswers(studentIndex: Int): List<Answer> {
+        return studentRepository.getAllStudentsAnswers()
+            .first { (index, _, _) -> index == studentIndex }.question.answers.map { it }
+    }
+
+    override fun isAnswerCorrect(studentIndex: Int, answer: Answer): Boolean =
+        studentRepository.getAllStudentsAnswers()
+            .first { it.studentIndex == studentIndex }.question.answers.contains(answer)
 }

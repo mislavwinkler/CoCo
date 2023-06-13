@@ -11,4 +11,8 @@ interface AnswerCheckerRepository {
     fun addIncorrectAnswerInfo(answers: List<Answer>): List<Answer>
 
     fun getStudentAccuracy(studentIndex: Int): Int
+    fun getStudentCorrectAnswers(studentIndex: Int): List<Answer>
+    fun getStudentIncorrectAnswers(studentIndex: Int): List<Answer>
+    fun getStudentQuestionCorrectAnswers(studentIndex: Int): List<Answer>
+    fun isAnswerCorrect(studentIndex: Int, answer: Answer): Boolean
 }

@@ -1,5 +1,6 @@
 package com.diplomski.mucnjak.coco.domain.repositories.state_machine
 
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.domain.repositories.active_activity.ActiveActivityRepository
 import com.diplomski.mucnjak.coco.domain.repositories.analytics.AnalyticsRepository
 import com.diplomski.mucnjak.coco.domain.repositories.answer_checker.AnswerCheckerRepository
@@ -23,6 +24,7 @@ class StateMachineRepositoryImpl @Inject constructor(
     private val answerCheckerRepository: AnswerCheckerRepository,
     private val analyticsRepository: AnalyticsRepository,
     private val iterationRepository: IterationRepository,
+    private val analytics: Analytics,
 ) : StateMachineRepository {
 
     private var state: State = State.NAME_INPUT
@@ -93,6 +95,7 @@ class StateMachineRepositoryImpl @Inject constructor(
 
     private fun startSetupStep(): State {
         analyticsRepository.init()
+        analytics.sendStudents()
         return State.SETUP
     }
 
@@ -123,6 +126,7 @@ class StateMachineRepositoryImpl @Inject constructor(
     private suspend fun determineStepAfterSolving(): State {
         analyticsRepository.storeResolutionTimeout()
         analyticsRepository.calculateAndStoreAccuracies()
+        analytics.sendResults()
         return if (answerCheckerRepository.checkAnswers() || !hasNextStep()) {
             startFinishNote()
         } else {

@@ -11,12 +11,13 @@ class SubscribeToStudentRotationUseCase @Inject constructor(
     private val studentRepository: StudentRepository,
 ) : SubscribeToStudentRotation {
 
-    override fun invoke(index: Int): Flow<Int> = studentRepository.studentUpdatesFlow.filter { (_, oldData, newData) ->
+    override fun invoke(index: Int): Flow<Int> =
+        studentRepository.studentUpdatesFlow.filter { (_, oldData, newData) ->
 
-        oldData.isNotNull() && newData.isNotNull()
-                && (oldData?.position == index || newData?.position == index)
-                && oldData?.rotation != newData?.rotation
-    }.map {
-        it.newData?.rotation ?: 0
-    }
+            oldData.isNotNull() && newData.isNotNull()
+                    && (oldData?.position == index || newData?.position == index)
+                    && oldData?.rotation != newData?.rotation
+        }.map {
+            it.newData?.rotation ?: 0
+        }
 }

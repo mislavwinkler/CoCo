@@ -1,6 +1,7 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.studentinput
 
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.data.ui.Student
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class StudentInputViewModel @Inject constructor(
     private val storeStudent: StoreStudent,
     private val confirmNextStep: ConfirmNextStep,
+    private val analytics: Analytics,
     subscribeToNavigationState: SubscribeToNavigationState,
 ) : BaseViewModel<StudentInputState, StudentInputNavigationEvent>(StudentInputState.Input) {
 
@@ -33,6 +35,7 @@ class StudentInputViewModel @Inject constructor(
     }
 
     fun confirmStudent(name: String, index: Int, rotation: Int = 0) {
+        analytics.sendStudentReady(index, "Student input")
         student = Student(name, index, rotation)
         viewModelScope.launch {
             storeStudent(student, index)

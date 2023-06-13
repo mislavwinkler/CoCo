@@ -1,6 +1,7 @@
 package com.diplomski.mucnjak.coco.ui.home
 
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.data.remote.exceptions.NoDocumentException
 import com.diplomski.mucnjak.coco.domain.use_case.get_activity.GetActivity
 import com.diplomski.mucnjak.coco.domain.use_case.is_activity_loaded.IsActivityLoaded
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getActivity: GetActivity,
     private val releaseActivity: ReleaseActivity,
+    private val analytics: Analytics,
     isActivityLoaded: IsActivityLoaded,
 ) : BaseViewModel<HomeState, NoNavigationEvent>(HomeState.Initial) {
 
@@ -32,6 +34,7 @@ class HomeViewModel @Inject constructor(
             try {
                 val activity = getActivity()
 
+                analytics.sendActivityAnalytics()
                 updateState {
                     HomeState.Loaded(
                         numOfStudents = activity.numOfStudent,

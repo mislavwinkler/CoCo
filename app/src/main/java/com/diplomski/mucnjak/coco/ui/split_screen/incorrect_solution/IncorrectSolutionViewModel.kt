@@ -1,6 +1,7 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.incorrect_solution
 
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
 import com.diplomski.mucnjak.coco.domain.use_case.get_next_time.GetNextTime
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class IncorrectSolutionViewModel @Inject constructor(
     private val rotateStudentScreen: RotateStudentScreen,
     private val confirmNextStep: ConfirmNextStep,
+    private val analytics: Analytics,
     getNextTime: GetNextTime,
     subscribeToNavigationState: SubscribeToNavigationState,
 ) : BaseViewModel<IncorrectSolutionState, IncorrectSolutionNavigationEvent>(
@@ -42,12 +44,14 @@ class IncorrectSolutionViewModel @Inject constructor(
     }
 
     fun rotateScreen(studentIndex: Int) {
+        analytics.sendStudentRotation(studentIndex, "Incorrect solution")
         viewModelScope.launch {
             rotateStudentScreen(studentIndex = studentIndex)
         }
     }
 
     fun confirmStudentNextStep(studentIndex: Int) {
+        analytics.sendStudentReady(studentIndex, "Incorrect solution")
         viewModelScope.launch {
             confirmNextStep(studentIndex = studentIndex)
             updateState { state ->

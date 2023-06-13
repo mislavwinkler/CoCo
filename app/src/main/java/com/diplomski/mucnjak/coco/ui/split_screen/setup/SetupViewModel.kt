@@ -1,6 +1,7 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.setup
 
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
 import com.diplomski.mucnjak.coco.domain.use_case.get_student_name.GetStudentName
@@ -17,6 +18,7 @@ class SetupViewModel @Inject constructor(
     private val rotateStudentScreen: RotateStudentScreen,
     private val confirmNextStep: ConfirmNextStep,
     private val subscribeToNavigationState: SubscribeToNavigationState,
+    private val analytics: Analytics,
 ) : BaseViewModel<SetupState, SetupNavigationEvent>(SetupState.Initial) {
 
     init {
@@ -38,6 +40,7 @@ class SetupViewModel @Inject constructor(
     }
 
     fun confirmSetup(studentIndex: Int) {
+        analytics.sendStudentReady(studentIndex, "Setup")
         viewModelScope.launch {
             confirmNextStep(studentIndex = studentIndex)
             updateState { state ->
@@ -47,6 +50,7 @@ class SetupViewModel @Inject constructor(
     }
 
     fun rotateScreen(studentIndex: Int) {
+        analytics.sendStudentRotation(studentIndex, "Setup")
         viewModelScope.launch {
             rotateStudentScreen(studentIndex = studentIndex)
         }

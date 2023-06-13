@@ -128,6 +128,7 @@ dependencies {
             platform(firebaseBom),
             firebaseFirestore,
             firebaseStorage,
+            firebaseAnalytics,
         )
     }
 

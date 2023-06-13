@@ -1,6 +1,7 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.retry_note
 
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
 import com.diplomski.mucnjak.coco.domain.use_case.rotate_student_screen.RotateStudentScreen
 import com.diplomski.mucnjak.coco.domain.use_case.subscribe_to_navigation_state.SubscribeToNavigationState
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class RetryNoteViewModel @Inject constructor(
     private val rotateStudentScreen: RotateStudentScreen,
     private val confirmNextStep: ConfirmNextStep,
+    private val analytics: Analytics,
     subscribeToNavigationState: SubscribeToNavigationState,
 ) : BaseViewModel<RetryNoteState, RetryNoteNavigationEvent>(RetryNoteState.Initial()) {
 
@@ -25,12 +27,14 @@ class RetryNoteViewModel @Inject constructor(
     }
 
     fun rotateScreen(studentIndex: Int) {
+        analytics.sendStudentRotation(studentIndex, "Retry note")
         viewModelScope.launch {
             rotateStudentScreen(studentIndex = studentIndex)
         }
     }
 
     fun confirmStudentNextStep(studentIndex: Int) {
+        analytics.sendStudentReady(studentIndex, "Retry note")
         viewModelScope.launch {
             confirmNextStep(studentIndex = studentIndex)
             updateState { state ->

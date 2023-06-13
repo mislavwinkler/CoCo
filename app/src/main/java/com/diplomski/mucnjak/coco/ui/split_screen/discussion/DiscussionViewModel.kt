@@ -2,6 +2,7 @@ package com.diplomski.mucnjak.coco.ui.split_screen.discussion
 
 import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
+import com.diplomski.mucnjak.coco.analytics.Analytics
 import com.diplomski.mucnjak.coco.domain.repositories.state_machine.State
 import com.diplomski.mucnjak.coco.domain.use_case.add_incorrect_answer_info.AddIncorrectAnswerInfo
 import com.diplomski.mucnjak.coco.domain.use_case.confirm_next_step.ConfirmNextStep
@@ -29,6 +30,7 @@ class DiscussionViewModel @Inject constructor(
     private val addIncorrectAnswerInfo: AddIncorrectAnswerInfo,
     private val getStudentAnswers: GetStudentAnswers,
     private val revokeNextStepConfirmation: RevokeNextStepConfirmation,
+    private val analytics: Analytics,
     subscribeToNavigationState: SubscribeToNavigationState,
     subscribeToTimerTicks: SubscribeToTimerTicks,
 ) : BaseViewModel<DiscussionState, DiscussionNavigationEvent>(DiscussionState.Initial) {
@@ -60,6 +62,7 @@ class DiscussionViewModel @Inject constructor(
     }
 
     fun rotateScreen(studentIndex: Int) {
+        analytics.sendStudentRotation(studentIndex, "Discussion")
         viewModelScope.launch {
             rotateStudentScreen(studentIndex = studentIndex)
         }
@@ -68,6 +71,7 @@ class DiscussionViewModel @Inject constructor(
 
     fun confirmStudentNextStep(studentIndex: Int) {
         if (isConfirmed) {
+            analytics.sendStudentReady(studentIndex, "Discussion")
             viewModelScope.launch {
                 revokeNextStepConfirmation(studentIndex = studentIndex)
                 updateState { state ->
@@ -75,6 +79,7 @@ class DiscussionViewModel @Inject constructor(
                 }
             }
         } else {
+            analytics.sendStudentUnready(studentIndex, "Discussion")
             viewModelScope.launch {
                 confirmNextStep(studentIndex = studentIndex)
                 updateState { state ->
