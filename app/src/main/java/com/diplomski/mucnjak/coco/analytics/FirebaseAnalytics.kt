@@ -8,6 +8,7 @@ import com.diplomski.mucnjak.coco.domain.repositories.answer_checker.AnswerCheck
 import com.diplomski.mucnjak.coco.domain.repositories.iteration.IterationRepository
 import com.diplomski.mucnjak.coco.domain.repositories.students.StudentRepository
 import com.diplomski.mucnjak.coco.domain.repositories.uuid.UuidRepository
+import com.google.firebase.Timestamp
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -43,6 +44,7 @@ class FirebaseAnalytics @Inject constructor(
             )
             putInt("solving_time", activeActivity.solvingTime)
             putInt("group_index", activeActivity.groupIndex)
+            putString("time", Timestamp.now().toString())
         })
     }
 
@@ -54,6 +56,7 @@ class FirebaseAnalytics @Inject constructor(
                 studentRepository.getAllStudents()
                     .joinToString(prefix = "\"", separator = "\", \"", postfix = "\"").take(100)
             )
+            putString("time", Timestamp.now().toString())
         })
     }
 
@@ -65,6 +68,7 @@ class FirebaseAnalytics @Inject constructor(
             putInt(
                 "rotation", studentRepository.getStudent(studentIndex)?.rotation ?: -1
             )
+            putString("time", Timestamp.now().toString())
         })
     }
 
@@ -106,6 +110,7 @@ class FirebaseAnalytics @Inject constructor(
                         ) else value.take(100)
                     }.take(100)
                 )
+                putString("time", Timestamp.now().toString())
             })
         }
     }
@@ -118,6 +123,7 @@ class FirebaseAnalytics @Inject constructor(
                 putString(
                     "name", studentRepository.getStudent(studentIndex)?.name
                 )
+                putString("time", Timestamp.now().toString())
             }
         })
     }
@@ -133,6 +139,7 @@ class FirebaseAnalytics @Inject constructor(
                 "is_action_correct",
                 answerCheckerRepository.isAnswerCorrect(studentIndex, answer)
             )
+            putString("time", Timestamp.now().toString())
         })
     }
 
@@ -147,6 +154,7 @@ class FirebaseAnalytics @Inject constructor(
                 "is_action_correct",
                 !answerCheckerRepository.isAnswerCorrect(studentIndex, answer)
             )
+            putString("time", Timestamp.now().toString())
         })
     }
 
@@ -155,6 +163,7 @@ class FirebaseAnalytics @Inject constructor(
         firebaseAnalytics.logEvent("student_ready", Bundle().apply {
             putString("name", studentRepository.getStudent(studentIndex)?.name)
             putString("screen_name", screen)
+            putString("time", Timestamp.now().toString())
         })
     }
 
@@ -163,6 +172,7 @@ class FirebaseAnalytics @Inject constructor(
         firebaseAnalytics.logEvent("student_unready", Bundle().apply {
             putString("name", studentRepository.getStudent(studentIndex)?.name)
             putString("screen_name", screen)
+            putString("time", Timestamp.now().toString())
         })
     }
 }
