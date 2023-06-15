@@ -31,13 +31,13 @@ class AnalyticsRepositoryImpl @Inject constructor(
         get() = results.discussionTimes
 
     override fun init() {
+        val activeActivity = activeActivityRepository.getLocalActiveActivity() ?: throw NullPointerException()
         results = ResultsDomainModel(
+            activityId = activeActivity.id,
             date = Timestamp.now(),
             group = 0,
-            subtopic = activeActivityRepository.getLocalActiveActivity()?.subTopic
-                ?: throw NullPointerException(),
-            topic = activeActivityRepository.getLocalActiveActivity()?.topic
-                ?: throw NullPointerException(),
+            subtopic = activeActivity.subTopic,
+            topic = activeActivity.topic,
             discussionTimes = mutableListOf(),
             results = mutableListOf(),
         )

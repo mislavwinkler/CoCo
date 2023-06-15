@@ -47,6 +47,28 @@ fun ConfirmButton(
 }
 
 @Composable
+fun ToggleConfirmButton(
+    modifier: Modifier = Modifier,
+    isConfirmed: Boolean = false,
+    onClick: () -> Unit,
+) {
+    Button(
+        modifier = modifier.size(Dimens.x8),
+        onClick = onClick,
+        shape = CircleShape,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = if (isConfirmed) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.background,
+            contentColor = if (isConfirmed) MaterialTheme.colors.background else MaterialTheme.colors.secondaryVariant,
+        )
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_check),
+            contentDescription = null,
+        )
+    }
+}
+
+@Composable
 fun RotateButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Button(
         modifier = modifier

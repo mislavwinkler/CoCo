@@ -79,9 +79,6 @@ fun CustomKeyboardManagerScope.CustomKeyboard(onConfirm: () -> Unit = {}) {
                     }
                 }
             }
-            Button(modifier = Modifier.fillMaxWidth(), onClick = { onKey(' ') }) {
-                Text(text = "Space")
-            }
         }
     }
 }

@@ -8,6 +8,7 @@ class AnalyticsNetworkMapper @Inject constructor() : AnalyticsMappers.AnalyticsN
 
     override fun mapToNetworkModel(domainModel: ResultsDomainModel): AnalyticsRequest =
         AnalyticsRequest(
+            activityId = domainModel.activityId,
             date = domainModel.date,
             group = domainModel.group + 1,
             subtopic = domainModel.subtopic,

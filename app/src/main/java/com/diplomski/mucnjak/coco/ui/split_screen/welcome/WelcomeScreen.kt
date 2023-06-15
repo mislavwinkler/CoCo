@@ -73,7 +73,9 @@ private fun ActivityPreview(
                 color = MaterialTheme.colors.primary,
             )
             FlowRow(
-                modifier = Modifier.padding(top = Dimens.x4)
+                modifier = Modifier.addWithSize(
+                    addOnLarge = { padding(top = Dimens.x4) },
+                ),
             ) {
                 Text(
                     text = state.topic,
@@ -87,7 +89,10 @@ private fun ActivityPreview(
                 )
             }
             Text(
-                modifier = Modifier.padding(top = Dimens.x2),
+                modifier = Modifier.addWithSize(
+                    addOnLarge = { padding(top = Dimens.x2) },
+                    addOnSmall = { padding(top = Dimens.x1) }
+                ),
                 text = state.description,
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.primary,
@@ -96,7 +101,7 @@ private fun ActivityPreview(
                 modifier = Modifier
                     .addWithSize(
                         addOnLarge = { padding(top = Dimens.x8) },
-                        addOnSmall = { padding(top = Dimens.x2) }
+                        addOnSmall = { padding(top = Dimens.x1) }
                     ),
                 onRotate = rotateScreen,
                 onConfirm = confirmActivityPreview,

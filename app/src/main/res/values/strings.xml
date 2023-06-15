@@ -31,4 +31,6 @@
     <string name="finish">Finish</string>
     <string name="congratulations_description">You handled this great, keep it up!\nThe exercise is over, call the teacher.!</string>
     <string name="return_to_solutions">Return to solutions</string>
+    <string name="what_is_your_name">What is your name?</string>
+    <string name="your_name">YOUR NAME</string>
 </resources>
