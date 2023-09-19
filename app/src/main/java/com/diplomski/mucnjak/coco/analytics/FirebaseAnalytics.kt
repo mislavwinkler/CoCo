@@ -54,7 +54,7 @@ class FirebaseAnalytics @Inject constructor(
             putString(
                 "name",
                 studentRepository.getAllStudents()
-                    .joinToString(prefix = "\"", separator = "\", \"", postfix = "\"").take(100)
+                    .joinToString(prefix = "\"", separator = "\", \"", postfix = "\"") { it.name }.take(100)
             )
             putString("time", Timestamp.now().toString())
         })

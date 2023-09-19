@@ -48,13 +48,23 @@ class AnalyticsRepositoryImpl @Inject constructor(
                     name = name,
                     accuracies = mutableListOf(),
                     initialResolutionTimes = mutableListOf(),
+                    studentResult = mutableMapOf(),
                 )
             )
         }
     }
 
     override fun calculateAndStoreAccuracies() {
-        studentResults.forEach { (studentIndex, _, accuracies, _) ->
+        studentResults.forEach { (studentIndex, _, accuracies, _, result) ->
+            val studentCorrectAnswers = answerCheckerRepository.getStudentCorrectAnswers(studentIndex)
+            val studentIncorrectAnswers = answerCheckerRepository.getStudentIncorrectAnswers(studentIndex)
+            val studentQuestionAnswers = answerCheckerRepository.getStudentQuestionCorrectAnswers(studentIndex)
+            result["markedCorrect${iterationRepository.getCurrentIteration()}"] =
+                studentCorrectAnswers.size
+            result["markedIncorrect${iterationRepository.getCurrentIteration()}"] =
+                (studentIncorrectAnswers - studentQuestionAnswers.toSet()).size
+            result["unmarkedCorrect${iterationRepository.getCurrentIteration()}"] =
+                (studentQuestionAnswers - studentCorrectAnswers.toSet()).size
             accuracies.add(answerCheckerRepository.getStudentAccuracy(studentIndex))
         }
     }

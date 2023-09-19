@@ -5,4 +5,5 @@ data class StudentResultsDomainModel(
     val name: String,
     val accuracies: MutableList<Int>,
     val initialResolutionTimes: MutableList<MutableList<Int>>,
+    val studentResult: MutableMap<String, Any>
 )

@@ -4,8 +4,7 @@ import com.diplomski.mucnjak.coco.extensions.empty
 
 data class ActiveActivityResponse(
     val answers: Map<String, Int> = emptyMap(),
-    // Typo in DB
-    @Suppress("SpellCheckingInspection") val anwserTypeImage: Boolean = false,
+    val anwserTypeImage: Boolean = false,
     val configToTablet: List<String?> = emptyList(),
     val correctionTimes: List<Int> = emptyList(),
     val discussionTimes: List<Int> = emptyList(),

@@ -74,7 +74,7 @@ class WelcomeViewModel @Inject constructor(
                     subtopic = activity.subTopic,
                     description = getString(
                         R.string.welcome_activity_description,
-                        solvingTime,
+                        solvingTime / 60,
                         question.questionText
                     )
                 )

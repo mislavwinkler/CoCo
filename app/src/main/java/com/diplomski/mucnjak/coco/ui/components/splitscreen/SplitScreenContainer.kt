@@ -1,13 +1,19 @@
 package com.diplomski.mucnjak.coco.ui.components.splitscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import com.diplomski.mucnjak.coco.extensions.pxToDp
+import com.diplomski.mucnjak.coco.ui.ComposeMock
+import com.diplomski.mucnjak.coco.ui.theme.CoCoTheme
+import com.diplomski.mucnjak.coco.ui.theme.StudentCoCoTheme
 
 val LocalIsPortrait: ProvidableCompositionLocal<Boolean> = compositionLocalOf { false }
 val LocalIsLarge: ProvidableCompositionLocal<Boolean> = compositionLocalOf { false }
@@ -57,5 +63,20 @@ fun SplitScreenContainer(
             2 -> PairContainer(screens = screens)
             else -> GridContainer(screens = screens)
         }
+    }
+}
+
+@Preview(device = ComposeMock.SAMSUNG_SM_X200)
+@Composable
+fun GridContainerPreview() {
+    CoCoTheme {
+        SplitScreenContainer(rotations = listOf(0, 0, 0, 0), screen = { index ->
+            StudentCoCoTheme(studentIndex = index) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colors.surface))
+            }
+        })
     }
 }

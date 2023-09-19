@@ -13,11 +13,9 @@ class AnalyticsNetworkMapper @Inject constructor() : AnalyticsMappers.AnalyticsN
             group = domainModel.group + 1,
             subtopic = domainModel.subtopic,
             topic = domainModel.topic,
-            results = domainModel.results.map { (_, name, accuracies, initialResolutionTimes) ->
+            results = domainModel.results.map { (_, name, _, initialResolutionTimes, studentResult) ->
                 val studentResultsMap = mutableMapOf<String, Any>()
-                accuracies.forEachIndexed { index, accuracy ->
-                    studentResultsMap["accuracy$index"] = accuracy
-                }
+                studentResultsMap.putAll(studentResult)
                 initialResolutionTimes.forEachIndexed { index, resolutionChangeTimes ->
                     studentResultsMap["resolutionTime$index"] = buildList {
                         add(resolutionChangeTimes[0])

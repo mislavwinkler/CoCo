@@ -21,17 +21,17 @@ class QuestionsRepositoryImpl @Inject constructor(
     private val mutex = Mutex()
 
     override suspend fun getAvailableQuestion(studentIndex: Int): Question = studentQuestion[studentIndex]
-        ?: mutex.withLock {
-            if (availableQuestions.isEmpty()) {
-                availableQuestions.addAll(
-                    activeActivityRepository.getActiveActivity()
-                        .let { questionsMappers.mapToUiModel(it) })
+            ?: mutex.withLock {
+                if (availableQuestions.isEmpty()) {
+                    availableQuestions.addAll(
+                        activeActivityRepository.getActiveActivity()
+                            .let { questionsMappers.mapToUiModel(it) })
+                }
+
+                studentQuestion[studentIndex] = availableQuestions.first()
+
+                return@withLock availableQuestions.removeFirst<Question>()
             }
-
-            studentQuestion[studentIndex] = availableQuestions.first()
-
-            return@withLock availableQuestions.removeFirst<Question>()
-        }
 
     override suspend fun releaseQuestion(studentIndex: Int) {
         if (studentQuestion.containsKey(studentIndex)) {

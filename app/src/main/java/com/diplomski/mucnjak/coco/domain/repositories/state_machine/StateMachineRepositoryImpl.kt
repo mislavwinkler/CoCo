@@ -150,7 +150,7 @@ class StateMachineRepositoryImpl @Inject constructor(
             throw IllegalStateException()
         }
         // Time is in minutes
-        clockRepository.startClock(time * 60) { nextStep() }
+        clockRepository.startClock(time) { nextStep() }
     }
 
     override suspend fun getNextDisplayTime(): Int = withContext(dispatcher.io) {
