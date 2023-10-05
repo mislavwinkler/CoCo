@@ -36,5 +36,7 @@ class AnalyticsNetworkMapper @Inject constructor() : AnalyticsMappers.AnalyticsN
                 studentResultsMap
             },
             discussionTimes = domainModel.discussionTimes,
+            resolutionTimesMax = domainModel.resolutionTimesMax,
+            discussionTimesMax = domainModel.discussionTimesMax
         )
 }

@@ -35,11 +35,13 @@ class AnalyticsRepositoryImpl @Inject constructor(
         results = ResultsDomainModel(
             activityId = activeActivity.id,
             date = Timestamp.now(),
-            group = 0,
+            group = activeActivity.groupIndex,
             subtopic = activeActivity.subTopic,
             topic = activeActivity.topic,
             discussionTimes = mutableListOf(),
             results = mutableListOf(),
+            resolutionTimesMax = activeActivity.correctionTimes.toMutableList().apply { add(0, activeActivity.solvingTime) },
+            discussionTimesMax = activeActivity.discussionTimes
         )
         studentRepository.getAllStudents().forEach { (name, position, _) ->
             studentResults.add(

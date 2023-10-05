@@ -8,4 +8,6 @@ data class AnalyticsRequest(
     val topic: String,
     val results: List<Map<String, Any>>,
     val discussionTimes: List<Int>,
+    val discussionTimesMax: List<Int>,
+    val resolutionTimesMax: List<Int>
 )

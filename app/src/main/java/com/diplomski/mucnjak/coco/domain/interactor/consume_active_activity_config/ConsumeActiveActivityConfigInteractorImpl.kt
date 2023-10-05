@@ -34,7 +34,8 @@ class ConsumeActiveActivityConfigInteractorImpl @Inject constructor(
 
             return@withContext activeActivityDomainModel.copy(
                 configToTablet = config,
-                activeNumOfStudents = activeNumOfStudents
+                activeNumOfStudents = activeNumOfStudents,
+                groupIndex = config.indexOf(uuid.toString())
             )
         }
 

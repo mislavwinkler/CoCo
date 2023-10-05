@@ -74,12 +74,12 @@ private fun SplitScreens(
                             )
                         ),
                     elevation = Dimens.zero,
-                    shape = RoundedCornerShape(
-                        topStart = MaterialTheme.shapes.small.topStart,
-                        topEnd = MaterialTheme.shapes.large.topEnd,
-                        bottomEnd = MaterialTheme.shapes.small.topEnd,
-                        bottomStart = MaterialTheme.shapes.large.bottomStart,
-                    )
+//                    shape = RoundedCornerShape(
+//                        topStart = MaterialTheme.shapes.small.topStart,
+//                        topEnd = MaterialTheme.shapes.large.topEnd,
+//                        bottomEnd = MaterialTheme.shapes.small.topEnd,
+//                        bottomStart = MaterialTheme.shapes.large.bottomStart,
+//                    )
                 ) {
                     IndividualNavigationContent()
                 }

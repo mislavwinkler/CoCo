@@ -1,5 +1,6 @@
 package com.diplomski.mucnjak.coco.ui.split_screen.studentinput
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
