@@ -8,6 +8,7 @@ data class ResultsDomainModel(
     val topic: String,
     val discussionTimes: MutableList<Int>,
     val results: MutableList<StudentResultsDomainModel>,
+    val numberOfPossibleAnswers: Int,
     val discussionTimesMax: List<Int>,
     val resolutionTimesMax: List<Int>
 )

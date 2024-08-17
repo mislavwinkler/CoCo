@@ -40,6 +40,7 @@ class AnalyticsRepositoryImpl @Inject constructor(
             topic = activeActivity.topic,
             discussionTimes = mutableListOf(),
             results = mutableListOf(),
+            numberOfPossibleAnswers = activeActivity.answers.size,
             resolutionTimesMax = activeActivity.correctionTimes.toMutableList().apply { add(0, activeActivity.solvingTime) },
             discussionTimesMax = activeActivity.discussionTimes
         )

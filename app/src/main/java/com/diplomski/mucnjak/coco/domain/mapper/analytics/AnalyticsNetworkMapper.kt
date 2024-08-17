@@ -35,6 +35,7 @@ class AnalyticsNetworkMapper @Inject constructor() : AnalyticsMappers.AnalyticsN
                 studentResultsMap["name"] = name
                 studentResultsMap
             },
+            numberOfPossibleAnswers = domainModel.numberOfPossibleAnswers,
             discussionTimes = domainModel.discussionTimes,
             resolutionTimesMax = domainModel.resolutionTimesMax,
             discussionTimesMax = domainModel.discussionTimesMax

@@ -7,6 +7,7 @@ data class AnalyticsRequest(
     val subtopic: String,
     val topic: String,
     val results: List<Map<String, Any>>,
+    val numberOfPossibleAnswers: Int,
     val discussionTimes: List<Int>,
     val discussionTimesMax: List<Int>,
     val resolutionTimesMax: List<Int>
