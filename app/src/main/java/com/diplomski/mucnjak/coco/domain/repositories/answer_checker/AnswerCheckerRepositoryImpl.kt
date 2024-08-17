@@ -2,6 +2,7 @@ package com.diplomski.mucnjak.coco.domain.repositories.answer_checker
 
 import com.diplomski.mucnjak.coco.data.ui.Answer
 import com.diplomski.mucnjak.coco.data.ui.Question
+import com.diplomski.mucnjak.coco.domain.repositories.active_activity.ActiveActivityRepository
 import com.diplomski.mucnjak.coco.domain.repositories.students.StudentRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -9,6 +10,7 @@ import kotlin.math.roundToInt
 
 @Singleton
 class AnswerCheckerRepositoryImpl @Inject constructor(
+    private val activeActivityRepository: ActiveActivityRepository,
     private val studentRepository: StudentRepository,
 ) : AnswerCheckerRepository {
 
@@ -38,13 +40,20 @@ class AnswerCheckerRepositoryImpl @Inject constructor(
         }
 
     override fun getStudentAccuracy(studentIndex: Int): Int {
+        val activeActivity = activeActivityRepository.getLocalActiveActivity() ?: throw NullPointerException()
         val studentAnswers = studentRepository.getAllStudentsAnswers()
             .first { (index, _, _) -> index == studentIndex }
-        val numberOfCorrectAnswers = studentAnswers.question.answers.size
+        val numberOfPossibleAnswers = activeActivity.answers.size
+        val numberOfPossibleIncorrectAnswers =
+            activeActivity.answers.size - studentAnswers.question.answers.size
         val numOfStudentCorrectAnswers =
             studentAnswers.answers.count { answer -> studentAnswers.question.answers.contains(answer) }
-        val numOfStudentIncorrectAnswers = studentAnswers.answers.size - numOfStudentCorrectAnswers
-        return ((numOfStudentCorrectAnswers.toFloat() / (numberOfCorrectAnswers + numOfStudentIncorrectAnswers)) * 100).roundToInt()
+        val numberOfUnmarkedIncorrectAnswers =
+            numberOfPossibleIncorrectAnswers - (studentAnswers.answers.size - numOfStudentCorrectAnswers)
+        return (
+                ((numOfStudentCorrectAnswers + numberOfUnmarkedIncorrectAnswers)
+                        / numberOfPossibleAnswers.toFloat()) * 100
+                ).roundToInt()
     }
 
     override fun getStudentCorrectAnswers(studentIndex: Int): List<Answer> {
