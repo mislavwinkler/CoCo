@@ -39,14 +39,15 @@ fun AnswerContainer(
                     ImageAnswer(
                         imageUrl = answer.value,
                         onClick = { onAnswerClick(answer) },
-                        isSelected = answer.incorrect
+                        isSelected = answer.incorrect || answer.notSelected
                     )
                 } else {
                     TextAnswer(
                         customButtonColor = customButtonColor,
                         text = answer.value,
                         onClick = { onAnswerClick(answer) },
-                        isSelected = answer.incorrect
+                        isSelected = answer.incorrect,
+                        notSelected = answer.notSelected
                     )
                 }
             }
@@ -60,12 +61,14 @@ fun TextAnswer(
     text: String,
     onClick: () ->
     Unit, isSelected: Boolean,
+    notSelected: Boolean,
     customButtonColor: Color = MaterialTheme.colors.surface
 ) {
     FilterChip(
         modifier = Modifier.padding(start = Dimens.answerPadding, top = Dimens.answerPadding),
         selected = isSelected,
         onClick = onClick,
+        border = if (notSelected) BorderStroke(Dimens.x0_5, MaterialTheme.colors.error) else null,
         colors = ChipDefaults.filterChipColors(
             backgroundColor = customButtonColor,
             contentColor = MaterialTheme.colors.primary,
@@ -113,8 +116,24 @@ fun ImageAnswer(imageUrl: String, onClick: () -> Unit, isSelected: Boolean) {
 fun PreviewTextAnswer() {
     CoCoTheme {
         Column {
-            TextAnswer(text = ComposeMock.LOREM_IPSUM, onClick = {}, isSelected = false)
-            TextAnswer(text = ComposeMock.LOREM_IPSUM, onClick = {}, isSelected = true)
+            TextAnswer(
+                text = ComposeMock.LOREM_IPSUM,
+                onClick = {},
+                isSelected = false,
+                notSelected = false
+            )
+            TextAnswer(
+                text = ComposeMock.LOREM_IPSUM,
+                onClick = {},
+                isSelected = true,
+                notSelected = false
+            )
+            TextAnswer(
+                text = ComposeMock.LOREM_IPSUM,
+                onClick = {},
+                isSelected = false,
+                notSelected = true
+            )
         }
     }
 }

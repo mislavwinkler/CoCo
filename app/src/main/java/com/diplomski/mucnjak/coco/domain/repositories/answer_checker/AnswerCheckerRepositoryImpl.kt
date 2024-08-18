@@ -15,16 +15,19 @@ class AnswerCheckerRepositoryImpl @Inject constructor(
 ) : AnswerCheckerRepository {
 
     private val incorrectAnswers: MutableSet<Answer> = mutableSetOf()
+    private val notSelectedAnswers: MutableSet<Answer> = mutableSetOf()
 
     override fun checkAnswers(): Boolean {
         incorrectAnswers.clear()
+        notSelectedAnswers.clear()
         val selectedAnswers = studentRepository.getAllStudentsAnswers()
         selectedAnswers.forEach { (_, question, answers) ->
             if (!compareQuestionAndAnswers(question, answers)) {
-                incorrectAnswers += (question.answers - answers.toSet()) + (answers - question.answers.toSet())
+                incorrectAnswers += answers - question.answers.toSet()
+                notSelectedAnswers += question.answers - answers.toSet()
             }
         }
-        return incorrectAnswers.isEmpty()
+        return (incorrectAnswers + notSelectedAnswers).isEmpty()
     }
 
     private fun compareQuestionAndAnswers(question: Question, answers: List<Answer>) =
@@ -34,6 +37,8 @@ class AnswerCheckerRepositoryImpl @Inject constructor(
         answers.map { answer ->
             if (incorrectAnswers.contains(answer)) {
                 answer.copy(incorrect = true)
+            } else if (notSelectedAnswers.contains(answer)) {
+                answer.copy(notSelected = true)
             } else {
                 answer
             }
