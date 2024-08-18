@@ -117,7 +117,6 @@ class StateMachineRepositoryImpl @Inject constructor(
     @OptIn(DelicateCoroutinesApi::class)
     private suspend fun startFinishNote(): State {
         GlobalScope.launch {
-            analyticsRepository.postAnalytics()
             clockRepository.startClock(4) { nextStep() }
         }
         return State.FINISH_NOTE
@@ -126,6 +125,7 @@ class StateMachineRepositoryImpl @Inject constructor(
     private suspend fun determineStepAfterSolving(): State {
         analyticsRepository.storeResolutionTimeout()
         analyticsRepository.calculateAndStoreAccuracies()
+        analyticsRepository.postAnalytics()
         analytics.sendResults()
         return if (answerCheckerRepository.checkAnswers() || !hasNextStep()) {
             startFinishNote()

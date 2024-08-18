@@ -10,6 +10,7 @@ import com.diplomski.mucnjak.coco.domain.repositories.clock.ClockRepository
 import com.diplomski.mucnjak.coco.domain.repositories.iteration.IterationRepository
 import com.diplomski.mucnjak.coco.domain.repositories.students.StudentRepository
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentReference
 import javax.inject.Inject
 
 class AnalyticsRepositoryImpl @Inject constructor(
@@ -23,6 +24,8 @@ class AnalyticsRepositoryImpl @Inject constructor(
 ) : AnalyticsRepository {
 
     private lateinit var results: ResultsDomainModel
+
+    private var analyticsDocument: DocumentReference? = null
 
     private val studentResults
         get() = results.results
@@ -99,10 +102,19 @@ class AnalyticsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postAnalytics() {
-        postAnalyticsResultsInteractor.postAnalyticsResults(
-            analyticsNetworkMapper.mapToNetworkModel(
-                results
+        if (this.analyticsDocument == null) {
+            this.analyticsDocument = postAnalyticsResultsInteractor.addAnalyticsResults(
+                analyticsNetworkMapper.mapToNetworkModel(
+                    results
+                )
             )
-        )
+        } else {
+            postAnalyticsResultsInteractor.updateAnalyticsResults(
+                analyticsDocument ?: return,
+                analyticsNetworkMapper.mapToNetworkModel(
+                    results
+                )
+            )
+        }
     }
 }
