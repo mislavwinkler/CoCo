@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "59832380661",
-    "project_id": "coco-be1e5",
-    "storage_bucket": "coco-be1e5.appspot.com"
+    "project_number": "614050471182",
+    "project_id": "coco-2024",
+    "storage_bucket": "coco-2024.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:59832380661:android:50011c1dc7179edf4869bc",
+        "mobilesdk_app_id": "1:614050471182:android:ad170ef0e85f0cd5260b5f",
         "android_client_info": {
           "package_name": "com.diplomski.mucnjak.coco"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "59832380661-2k4csck02i6g3jdj079r3soajjvp385q.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.diplomski.mucnjak.coco",
-            "certificate_hash": "71e76b0e588bd85b51251aa44c291c532b17529f"
-          }
-        },
-        {
-          "client_id": "59832380661-4bgeoba0b9da76vgrpkphff8fp4a120d.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAidG5ByWLDTFS-YsybperUcSGypyK8-xc"
+          "current_key": "AIzaSyBc--L8pyqm-UjR0l5u-7ZWGkB4ITVohu0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "59832380661-4bgeoba0b9da76vgrpkphff8fp4a120d.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
