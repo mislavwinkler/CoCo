@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "614050471182",
     "project_id": "coco-2024",
-    "storage_bucket": "coco-2024.appspot.com"
+    "storage_bucket": "coco-2024.firebasestorage.app"
   },
   "client": [
     {
